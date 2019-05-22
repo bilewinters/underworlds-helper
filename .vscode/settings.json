@@ -1,0 +1,5 @@
+{
+  "prettier.eslintIntegration": true,
+  "eslint.packageManager": "yarn",
+  "eslint.run": "onSave"
+}
