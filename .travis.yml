@@ -23,5 +23,5 @@ jobs:
       script:
         - yarn
         - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
-        - node_modules/expo-cli/bin/expo.js expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-        - node_modules/expo-cli/bin/expo.js expo publish --release-channel alpha --non-interactive
+        - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+        - node_modules/expo-cli/bin/expo.js publish --release-channel alpha --non-interactive
