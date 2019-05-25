@@ -1,19 +1,19 @@
 os: osx
 osx_image: xcode10.2
-language: node_js
-node_js:
-  - node
-  - lts/*
-cache:
-  directories:
-    - ~/.npm
-before_script:
-  - npm install -g npm@latest
+addons:
+  homebrew:
+    packages:
+      - node
+
+# stages:
+#   - name: publish
+#     if: branch = master
+#   - name: deploy
+#     if: branch = release
 
 jobs:
   include:
     - stage: publish
-      node_js: lts/*
       script:
         - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
         - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
