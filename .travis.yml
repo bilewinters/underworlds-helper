@@ -47,7 +47,7 @@ jobs:
         - yarn
         - node_modules/expo-cli/bin/expo.js login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
         - curl -o app.apk "$(node_modules/expo-cli/bin/expo.js url:apk --non-interactive)"
-        - echo "$PLAY_JSON_KEY" > /tmp/play_key.json
+        - echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
         - bundle exec fastlane supply --track 'beta' --json_key '/tmp/play_key.json' --package_name "com.wordsspeaklouder.uwhelper" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
       name: 'deploy android'
     - script:
