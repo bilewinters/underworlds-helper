@@ -4,6 +4,12 @@ addons:
   homebrew:
     packages:
       - node
+      - yarn
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
 
 # stages:
 #   - name: publish
@@ -15,6 +21,7 @@ jobs:
   include:
     - stage: publish
       script:
+        - yarn
         - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
-        - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-        - npx expo publish --release-channel alpha --non-interactive
+        - node_modules/expo-cli/bin/expo.js expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+        - node_modules/expo-cli/bin/expo.js expo publish --release-channel alpha --non-interactive
