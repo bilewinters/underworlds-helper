@@ -34,14 +34,14 @@ jobs:
         - node updateVersionNumber.js $CI_PIPELINE_IID
         - node_modules/expo-cli/bin/expo.js login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
         - node_modules/expo-cli/bin/expo.js build:android --release-channel prod --non-interactive
-      name: "build android"
-      script:
+      name: 'build android'
+    - script:
         - yarn
         - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
         - node updateVersionNumber.js $TRAVIS_BUILD_NUMBER
         - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
         - node_modules/expo-cli/bin/expo.js build:ios --release-channel prod --non-interactive
-      name: "build ios"
+      name: 'build ios'
     - stage: deploy
       script:
         - yarn
@@ -50,7 +50,7 @@ jobs:
         - echo "$PLAY_JSON_KEY" > /tmp/play_key.json
         - bundle exec fastlane supply --track 'beta' --json_key '/tmp/play_key.json' --package_name "com.wordsspeaklouder.uwhelper" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
       name: 'deploy android'
-      script:
+    - script:
         - yarn
         - node_modules/expo-cli/bin/expo.js login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
         - curl -o app.ipa "$(node_modules/expo-cli/bin/expo.js url:ipa --non-interactive)"
