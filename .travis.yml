@@ -4,7 +4,7 @@ addons:
   homebrew:
     packages:
       - node
-      - yarn
+      # - yarn
 
 cache:
   yarn: true
@@ -21,40 +21,43 @@ stages:
 
 jobs:
   include:
-    - stage: publish
-      script:
-        - yarn
-        - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
-        - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-        - node_modules/expo-cli/bin/expo.js publish --release-channel alpha --non-interactive
+    # - stage: publish
+    #   script:
+    #     - yarn
+    #     - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
+    #     - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+    #     - node_modules/expo-cli/bin/expo.js publish --release-channel alpha --non-interactive
+    # - stage: build
+    #   script:
+    #     - yarn
+    #     - node updateBuildNumber.js $CI_PIPELINE_IID
+    #     - node updateVersionNumber.js $CI_PIPELINE_IID
+    #     - node_modules/expo-cli/bin/expo.js login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
+    #     - node_modules/expo-cli/bin/expo.js build:android --release-channel prod --non-interactive
+    #   name: 'build android'
+    # - script:
+    #     - yarn
+    #     - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
+    #     - node updateVersionNumber.js $TRAVIS_BUILD_NUMBER
+    #     - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+    #     - node_modules/expo-cli/bin/expo.js build:ios --release-channel prod --non-interactive
+    #   name: 'build ios'
+    # - stage: deploy
+    #   script:
+    #     - yarn
+    #     - node_modules/expo-cli/bin/expo.js login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
+    #     - curl -o app.apk "$(node_modules/expo-cli/bin/expo.js url:apk --non-interactive)"
+    #     - echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
+    #     - bundle exec fastlane supply --track 'beta' --json_key '/tmp/play_key.json' --package_name "com.wordsspeaklouder.uwhelper" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
+    #   name: 'deploy android'
+    # - script:
+    #     - yarn
+    #     - node_modules/expo-cli/bin/expo.js login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
+    #     - curl -o app.ipa "$(node_modules/expo-cli/bin/expo.js url:ipa --non-interactive)"
+    #     - export DELIVER_USERNAME=$APPLE_USER
+    #     - export DELIVER_PASSWORD=$APPLE_PASSWORD
+    #     - fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata
+    #   name: 'deploy ios'
     - stage: build
       script:
-        - yarn
-        - node updateBuildNumber.js $CI_PIPELINE_IID
-        - node updateVersionNumber.js $CI_PIPELINE_IID
-        - node_modules/expo-cli/bin/expo.js login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
-        - node_modules/expo-cli/bin/expo.js build:android --release-channel prod --non-interactive
-      name: 'build android'
-    - script:
-        - yarn
-        - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
-        - node updateVersionNumber.js $TRAVIS_BUILD_NUMBER
-        - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-        - node_modules/expo-cli/bin/expo.js build:ios --release-channel prod --non-interactive
-      name: 'build ios'
-    - stage: deploy
-      script:
-        - yarn
-        - node_modules/expo-cli/bin/expo.js login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
-        - curl -o app.apk "$(node_modules/expo-cli/bin/expo.js url:apk --non-interactive)"
-        - echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
-        - bundle exec fastlane supply --track 'beta' --json_key '/tmp/play_key.json' --package_name "com.wordsspeaklouder.uwhelper" --apk "app.apk" --skip_upload_metadata --skip_upload_images --skip_upload_screenshots
-      name: 'deploy android'
-    - script:
-        - yarn
-        - node_modules/expo-cli/bin/expo.js login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
-        - curl -o app.ipa "$(node_modules/expo-cli/bin/expo.js url:ipa --non-interactive)"
-        - export DELIVER_USERNAME=$APPLE_USER
-        - export DELIVER_PASSWORD=$APPLE_PASSWORD
-        - fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata
-      name: 'deploy ios'
+        - echo $TRAVIS_BUILD_NUMBER
