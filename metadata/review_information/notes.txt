@@ -1,0 +1,1 @@
+No sign in required. App allows tracking of points and turns in board games.

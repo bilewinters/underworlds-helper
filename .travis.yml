@@ -15,7 +15,7 @@ stages:
   - name: publish
     if: branch = master
   - name: build
-    if: branch = release
+    if: branch = ci-test
   - name: deploy
     if: branch = ci-test
 
@@ -29,13 +29,13 @@ jobs:
         - node_modules/expo-cli/bin/expo.js publish --release-channel alpha --non-interactive
     - stage: build
       script:
-        - yarn
-        - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
-        - node updateVersionNumber.js $TRAVIS_BUILD_NUMBER
-        - node_modules/expo-cli/bin/expo.js login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
-        - node_modules/expo-cli/bin/expo.js build:android --release-channel prod --non-interactive
-      name: 'build android'
-    - script:
+        #     - yarn
+        #     - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
+        #     - node updateVersionNumber.js $TRAVIS_BUILD_NUMBER
+        #     - node_modules/expo-cli/bin/expo.js login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
+        #     - node_modules/expo-cli/bin/expo.js build:android --release-channel prod --non-interactive
+        #   name: 'build android'
+        # - script:
         - yarn
         - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
         - node updateVersionNumber.js $TRAVIS_BUILD_NUMBER
@@ -56,5 +56,5 @@ jobs:
         - curl -o app.ipa "$(node_modules/expo-cli/bin/expo.js url:ipa --non-interactive)"
         - export DELIVER_USERNAME=$APPLE_USER
         - export DELIVER_PASSWORD=$APPLE_PASSWORD
-        - fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata
+        - fastlane deliver --verbose --ipa "app.ipa" --submit_for_review --automatic_release --skip_screenshots
       name: 'deploy ios'

@@ -1,0 +1,16 @@
+Finally, an app to aid you in playing games of Underworlds!
+
+Track the game state for you and your opponent:
+
+- Never forget the round you are on again!
+
+- Keep track of you and your opponents activations!
+
+- Your glory points at your finger tips - and an eye on how much your opponent has scored!
+
+We hope to introduce more features as we move forwards, and to reintroduce augmented reality for scatter moves.
+
+Graphic design by Mirko Bruner
+Development by Paul McCabe
+Trailer audio by Jedo - https://freesound.org/people/Jedo/
+Audio Licensed under Creative Commons - https://creativecommons.org/licenses/by/3.0/

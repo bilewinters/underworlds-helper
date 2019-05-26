@@ -1,0 +1,3 @@
+Track the state of an Underworlds game for you and your opponent.
+
+New look and feel - beautiful graphics and better interactions.
