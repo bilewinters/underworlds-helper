@@ -56,6 +56,5 @@ jobs:
         - curl -o app.ipa "$(node_modules/expo-cli/bin/expo.js url:ipa --non-interactive)"
         - export DELIVER_USERNAME=$APPLE_USER
         - export DELIVER_PASSWORD=$APPLE_PASSWORD
-        - export FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=$APPLE_PASSWORD
         - fastlane deliver --verbose --ipa "app.ipa" --skip_screenshots --skip_metadata
       name: 'deploy ios'
