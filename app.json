@@ -28,7 +28,7 @@
       "package": "com.wordsspeaklouder.uwhelper",
       "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon-1024.png",
+        "foregroundImage": "./assets/images/icon_glass.jpg",
         "backgroundColor": "#07583b"
       },
       "permissions": []
