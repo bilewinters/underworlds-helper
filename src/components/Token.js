@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity, Platform } from 'react-native';
-import { Title } from '@/components';
-import { getTitleFontPaddingTop } from '@/utils';
 import designTokens from '@design/tokens';
+import { Title } from './Text';
+import { getTitleFontPaddingTop } from '@/utils';
 
 const tokenBase = {
   alignItems: 'center',

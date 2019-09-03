@@ -3,7 +3,10 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Asset, Constants, Font, Updates } from 'expo';
+import { Updates } from 'expo';
+import { Asset } from 'expo-asset';
+import Constants from 'expo-constants';
+import * as Font from 'expo-font';
 
 import { BackgroundGlass, Logo } from '@/components';
 import { onNextToastHide } from '@/system/Toast';

@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { AppLoading, Asset } from 'expo';
+import { AppLoading } from 'expo';
+import { Asset } from 'expo-asset';
 import Root from '@/Root';
 
 const loadAssets = async () =>
