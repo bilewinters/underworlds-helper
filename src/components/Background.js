@@ -1,8 +1,8 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, StatusBar, View } from 'react-native';
 
-import background from '@assets/images/bg_plain.jpg';
-import backgroundGlass from '@assets/images/bg_glass.jpg';
+import background from '@assets/images/bg/bg_plain.jpg';
+import backgroundGlass from '@assets/images/bg/bg_teeth.jpg';
 
 const styles = StyleSheet.create({
   container: {

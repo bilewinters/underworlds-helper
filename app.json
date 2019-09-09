@@ -10,7 +10,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/old/logo-1024.png",
     "splash": {
-      "image": "./assets/images/bg_splash.png",
+      "image": "./assets/images/bg/bg_teeth.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },

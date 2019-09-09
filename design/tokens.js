@@ -5,10 +5,11 @@ const pallet = {
   green: '#008000',
   grey: '#808080',
   white: '#FFFFFF',
+  brown: '#883b0d',
 };
 
 const color = {
-  primary: pallet.green,
+  primary: pallet.brown,
 };
 
 const button = {

@@ -57,7 +57,7 @@ const loadAssets = async () =>
     Font.loadAsync({
       'sava-pro-semibold': require('@assets/fonts/SavaPro-Semibold.otf'),
     }),
-    Asset.fromModule(require('@assets/images/bg_plain.jpg')).downloadAsync(),
+    Asset.fromModule(require('@assets/images/bg/bg_plain.jpg')).downloadAsync(),
   ]);
 
 class Splash extends React.Component {
