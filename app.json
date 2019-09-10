@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "uwhelper",
+    "name": "Underworlds",
     "description": "Underworlds Helper - helper for Underworlds gaming",
     "slug": "uwhelper",
     "privacy": "unlisted",
     "sdkVersion": "34.0.0",
     "platforms": ["ios", "android"],
-    "version": "1.2.0",
+    "version": "2.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/old/logo-1024.png",
+    "icon": "./assets/images/bg/icon.png",
     "splash": {
       "image": "./assets/images/bg/bg_teeth.png",
       "resizeMode": "cover",
@@ -31,8 +31,8 @@
       "package": "com.wordsspeaklouder.uwhelper",
       "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/old/logo-1024.png",
-        "backgroundColor": "#07583b"
+        "foregroundImage": "./assets/images/bg/icon.png",
+        "backgroundColor": "#883b0d"
       },
       "permissions": []
     }

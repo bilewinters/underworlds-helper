@@ -9,7 +9,6 @@ const loadAssets = async () =>
   // are loaded while the spash screen is displayed.
   Promise.all([
     Asset.fromModule(require('@assets/images/bg/bg_teeth.jpg')).downloadAsync(),
-    Asset.fromModule(require('@assets/images/bg/bg_plain.jpg')).downloadAsync(),
     Asset.fromModule(require('@assets/images/logo.png')).downloadAsync(),
   ]);
 

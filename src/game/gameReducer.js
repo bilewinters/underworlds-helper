@@ -27,6 +27,10 @@ const initialiseGame = (numberOfPlayers, dispatch) => {
   dispatch({ type: moveToGameType });
 };
 
+const continueGame = dispatch => {
+  dispatch({ type: moveToGameType });
+};
+
 const flipActivation = (playerIndex, activationIndex, dispatch) =>
   dispatch({
     type: flipActivationType,
@@ -202,6 +206,7 @@ export default reducer;
 
 export {
   initialiseGame,
+  continueGame,
   flipActivation,
   addGlory,
   removeGlory,

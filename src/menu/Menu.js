@@ -1,10 +1,11 @@
+/* eslint-disable react-native/no-raw-text */
 import React from 'react';
 import { BackHandler, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 import { BackgroundGlass, Heading } from '@/components';
-import { initialiseGame } from '@/game/gameReducer';
+import { initialiseGame, continueGame } from '@/game/gameReducer';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,22 +31,29 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { dispatch } = this.props;
+    const { dispatch, currentGameId } = this.props;
     return (
       <BackgroundGlass>
         <SafeAreaView style={styles.container}>
           <TouchableOpacity onPress={() => initialiseGame(1, dispatch)}>
-            {/* eslint-disable-next-line react-native/no-raw-text */}
             <Heading>1 Player</Heading>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => initialiseGame(2, dispatch)}>
-            {/* eslint-disable-next-line react-native/no-raw-text */}
             <Heading>2 Players</Heading>
           </TouchableOpacity>
+          {currentGameId && (
+            <TouchableOpacity onPress={() => continueGame(dispatch)}>
+              <Heading>Continue</Heading>
+            </TouchableOpacity>
+          )}
         </SafeAreaView>
       </BackgroundGlass>
     );
   }
 }
 
-export default connect()(Menu);
+const mapStateToProps = state => ({
+  currentGameId: state.game.currentGameId,
+});
+
+export default connect(mapStateToProps)(Menu);
