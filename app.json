@@ -8,7 +8,6 @@
     "platforms": ["ios", "android"],
     "version": "2.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/bg/icon.png",
     "splash": {
       "image": "./assets/images/bg/bg_teeth.png",
       "resizeMode": "cover",
@@ -23,6 +22,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.wordsspeaklouder.uwhelper",
       "buildNumber": "1",
+      "icon": "./assets/images/bg/iconIos.png",
       "config": {
         "usesNonExemptEncryption": false
       }
@@ -30,9 +30,11 @@
     "android": {
       "package": "com.wordsspeaklouder.uwhelper",
       "versionCode": 1,
+      "icon": "./assets/images/bg/iconAndroid.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/bg/icon.png",
-        "backgroundColor": "#883b0d"
+        "foregroundImage": "./assets/images/bg/iconAndroidFG.png",
+        "backgroundImage": "./assets/images/bg/iconAndroidBG.png",
+        "backgroundColor": "#ffd1c9"
       },
       "permissions": []
     }
