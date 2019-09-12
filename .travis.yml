@@ -46,9 +46,8 @@ jobs:
         - echo "Build number $TRAVIS_BUILD_NUMBER"
         - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
         - node updateVersionNumber.js $TRAVIS_BUILD_NUMBER
-        - cat app.json
-        - cat buildInfo.json
-        # - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-        # - node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish
-        # - echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
-        # - node_modules/expo-cli/bin/expo.js upload:android --key /tmp/play_key.json
+        - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+        - node_modules/expo-cli/bin/expo.js publish --release-channel prod --non-interactive
+        - node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish
+        - echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
+        - node_modules/expo-cli/bin/expo.js upload:android --key /tmp/play_key.json
