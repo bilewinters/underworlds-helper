@@ -16,8 +16,8 @@ stages:
   #   if: branch = travis-setup
   - name: build
     if: branch = travis-setup
-  # - name: deploy
-  #   if: branch = travis-setup
+  - name: deploy
+    if: branch = travis-setup
 
 jobs:
   include:
@@ -26,11 +26,17 @@ jobs:
         - yarn
         - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
         - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-        - node_modules/expo-cli/bin/expo.js publish --release-channel alpha --non-interactive
+        - node_modules/expo-cli/bin/expo.js publish --release-channel prod --non-interactive
     - stage: build
       script:
         - yarn
         - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
         - node updateVersionNumber.js $TRAVIS_BUILD_NUMBER
         - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-        - node_modules/expo-cli/bin/expo.js build:android --release-channel prod
+        - node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish --no-wait
+    - stage: deploy
+      script:
+        - yarn
+        - echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
+        - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+        - node_modules/expo-cli/bin/expo.js build:upload --key /tmp/play_key.json
