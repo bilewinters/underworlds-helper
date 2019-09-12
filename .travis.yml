@@ -14,10 +14,10 @@ cache:
 stages:
   # - name: publish
   #   if: branch = travis-setup
-  - name: build
-    if: branch = travis-setup
-  # - name: deploy
+  # - name: build
   #   if: branch = travis-setup
+  - name: deploy
+    if: branch = travis-setup
 
 jobs:
   include:
