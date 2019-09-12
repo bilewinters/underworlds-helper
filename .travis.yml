@@ -39,4 +39,4 @@ jobs:
         - yarn
         - echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
         - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-        - node_modules/expo-cli/bin/expo.js build:upload --key /tmp/play_key.json
+        - node_modules/expo-cli/bin/expo.js upload:android --key /tmp/play_key.json
