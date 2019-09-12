@@ -7,3 +7,6 @@ npm-debug.*
 *.mobileprovision
 .DS_Store
 */.DS_Store
+
+buildOutput.txt
+buildStatus.txt

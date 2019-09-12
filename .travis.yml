@@ -1,0 +1,27 @@
+os: osx
+osx_image: xcode10.3
+
+cache:
+  directories:
+    - node_modules
+
+stages:
+  - name: publish
+    if: branch = master
+  - name: build
+    if: branch = deploy
+
+jobs:
+  include:
+    - stage: publish
+      name: 'Publish Javascript'
+      script:
+        - bash scripts/publish.sh
+    - stage: build
+      name: 'Build iOS'
+      script:
+        - bash scripts/buildApple.sh
+    - stage: build
+      name: 'Build Android'
+      script:
+        - bash scripts/buildAndroid.sh
