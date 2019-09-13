@@ -11,43 +11,16 @@ cache:
   directories:
     - node_modules
 
+env:
+  - ARCH=ios
+  - ARCH=android
+
 stages:
-  # - name: publish
-  #   if: branch = travis-setup
-  - name: buildAndroid
+  - name: build
     if: branch = travis-setup
-  # - name: deploy
-  #   if: branch = travis-setup-deploy
 
 jobs:
   include:
-    # - stage: publish
-    #   script:
-    #     - yarn
-    #     - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
-    #     - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-    #     - node_modules/expo-cli/bin/expo.js publish --release-channel prod --non-interactive
-    # - stage: build
-    #   script:
-    #     - yarn
-    #     - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
-    #     - node updateVersionNumber.js $TRAVIS_BUILD_NUMBER
-    #     - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-    #     - node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish --no-wait
-    # - stage: deploy
-    #   script:
-    #     - yarn
-    #     - echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
-    #     - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-    #     - node_modules/expo-cli/bin/expo.js upload:android --key /tmp/play_key.json
-    - stage: buildAndroid
+    - stage: build
       script:
-        - yarn
-        - echo "Build number $TRAVIS_BUILD_NUMBER"
-        - node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
-        - node updateVersionNumber.js $TRAVIS_BUILD_NUMBER
-        - node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-        - node_modules/expo-cli/bin/expo.js publish --release-channel prod --non-interactive
-        - node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish
-        - echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
-        - node_modules/expo-cli/bin/expo.js upload:android --key /tmp/play_key.json
+        - bash scripts/buildAndDeploy.sh
