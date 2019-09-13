@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ $ARCH == "android" ]; then
+if [ $1 == "android" ]; then
     echo "### Build android ###"
     yarn
     echo "Build number $TRAVIS_BUILD_NUMBER"
@@ -16,6 +16,6 @@ if [ $ARCH == "android" ]; then
     node_modules/expo-cli/bin/expo.js upload:android --key /tmp/play_key.json
 fi
 
-if [ $ARCH == "ios" ]; then
+if [ $1 == "ios" ]; then
     echo "### Build iOS ###"
 fi

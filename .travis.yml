@@ -11,10 +11,6 @@ cache:
   directories:
     - node_modules
 
-env:
-  - ARCH=ios
-  - ARCH=android
-
 stages:
   - name: build
     if: branch = travis-setup
@@ -23,4 +19,8 @@ jobs:
   include:
     - stage: build
       script:
-        - bash scripts/buildAndDeploy.sh
+        - bash scripts/buildAndDeploy.sh ios
+
+    - stage: build
+      script:
+        - bash scripts/buildAndDeploy.sh android
