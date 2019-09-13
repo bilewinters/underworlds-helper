@@ -11,7 +11,7 @@ if [ $1 == "android" ]; then
     cat buildOutput.txt
     buildUrl=`grep "https://expo.io/builds/" buildOutput.txt`
     echo "Checking status of build $buildUrl"
-    bash build/waitForBuildCompletion.sh $buildUrl
+    bash scripts/waitForBuildCompletion.sh $buildUrl
     echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
     node_modules/expo-cli/bin/expo.js upload:android --key /tmp/play_key.json
 fi
