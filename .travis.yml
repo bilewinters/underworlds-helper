@@ -1,32 +1,27 @@
 os: osx
 osx_image: xcode10.3
-# addons:
-#   homebrew:
-#     packages:
-#       - node
-#       - yarn
 
 cache:
   directories:
     - node_modules
 
 stages:
-  # - name: publish
-  #   if: branch = travis-setup
+  - name: publish
+    if: branch = travis-setup
   - name: build
     if: branch = travis-setup
 
 jobs:
   include:
-    # - stage: publish
-    #   name: 'Publish Javascript'
-    #   script:
-    #     - bash scripts/publish.sh
+    - stage: publish
+      name: 'Publish Javascript'
+      script:
+        - bash scripts/publish.sh
     - stage: build
       name: 'Build iOS'
       script:
-        - bash scripts/buildAndDeploy.sh ios
-  # - stage: build
-  #   name: 'Build Android'
-  #   script:
-  #     - bash scripts/buildAndDeploy.sh android
+        - bash scripts/buildApple.sh
+    - stage: build
+      name: 'Build Android'
+      script:
+        - bash scripts/buildAndroid.sh
