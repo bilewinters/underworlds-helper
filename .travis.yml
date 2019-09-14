@@ -18,16 +18,16 @@ stages:
   #   if: branch = travis-setup
 
 jobs:
+  - stage: build
+    name: 'Build iOS'
+    script:
+      - bash scripts/buildAndDeploy.sh ios
   # include:
   #   - stage: publish
   #     name: 'Publish Javascript'
   #     script:
   #       - bash scripts/publish.sh
   #
-  - stage: build
-    name: 'Build iOS'
-    script:
-      - bash scripts/buildAndDeploy.sh ios
   # - stage: build
   #   name: 'Build Android'
   #   script:
