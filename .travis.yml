@@ -12,8 +12,8 @@ cache:
     - node_modules
 
 stages:
-  # - name: publish
-  #   if: branch = travis-setup
+  - name: publish
+    if: branch = travis-setup
   - name: build
     if: branch = travis-setup
 
