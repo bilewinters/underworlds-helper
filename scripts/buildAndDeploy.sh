@@ -49,26 +49,26 @@ if [ $1 == "android" ]; then
 fi
 
 if [ $1 == "ios" ]; then
-    echo ""
-    echo "----------------------------------------"
-    echo "------- Starting App (IPA) build -------"
-    echo "----------------------------------------"
-    echo ""
-    node_modules/expo-cli/bin/expo.js build:ios --release-channel prod --no-publish --no-wait > buildOutput.txt
-    cat buildOutput.txt
-    if [ $(grep -o "Build started, it may take a few minutes" buildOutput.txt | wc -l) == "0" ]; then
-        echo "Build did not start successfully. Aborting."
-        exit -1
-    fi
+    # echo ""
+    # echo "----------------------------------------"
+    # echo "------- Starting App (IPA) build -------"
+    # echo "----------------------------------------"
+    # echo ""
+    # node_modules/expo-cli/bin/expo.js build:ios --release-channel prod --no-publish --no-wait > buildOutput.txt
+    # cat buildOutput.txt
+    # if [ $(grep -o "Build started, it may take a few minutes" buildOutput.txt | wc -l) == "0" ]; then
+    #     echo "Build did not start successfully. Aborting."
+    #     exit -1
+    # fi
 
-    echo ""
-    echo "----------------------------------------"
-    echo "------ Monitoring App (IPA) build ------"
-    echo "----------------------------------------"
-    echo ""
-    buildUrl=`grep "https://expo.io/builds/" buildOutput.txt`
-    echo "Build URL is $buildUrl"
-    bash scripts/waitForBuildCompletion.sh $buildUrl
+    # echo ""
+    # echo "----------------------------------------"
+    # echo "------ Monitoring App (IPA) build ------"
+    # echo "----------------------------------------"
+    # echo ""
+    # buildUrl=`grep "https://expo.io/builds/" buildOutput.txt`
+    # echo "Build URL is $buildUrl"
+    # bash scripts/waitForBuildCompletion.sh $buildUrl
 
     echo ""
     echo "----------------------------------------"
@@ -77,7 +77,7 @@ if [ $1 == "ios" ]; then
     echo ""
     # node_modules/expo-cli/bin/expo.js upload:ios
 
-    ipaUrl=node_modules/expo-cli/bin/expo.js url:ipa
+    ipaUrl=`node_modules/expo-cli/bin/expo.js url:ipa`
     curl ${ipaUrl} > uwhelper.ipa
 
     bundle install
