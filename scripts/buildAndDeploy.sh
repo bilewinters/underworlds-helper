@@ -5,7 +5,7 @@ echo "----------------------------------------"
 echo "------------- Build binary -------------"
 echo "----------------------------------------"
 echo ""
-yarn
+npm install
 echo "Build number $TRAVIS_BUILD_NUMBER"
 node updateBuildNumber.js $TRAVIS_BUILD_NUMBER
 node updateVersionNumber.js $TRAVIS_BUILD_NUMBER
