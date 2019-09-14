@@ -1,10 +1,10 @@
 os: osx
 osx_image: xcode11
-addons:
-  homebrew:
-    packages:
-      - node
-      - yarn
+# addons:
+#   homebrew:
+#     packages:
+#       - node
+#       - yarn
 
 cache:
   yarn: true
