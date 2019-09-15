@@ -8,7 +8,7 @@ const loadAssets = async () =>
   // These are the assets needed for the splash screen. The rest of our assets
   // are loaded while the spash screen is displayed.
   Promise.all([
-    Asset.fromModule(require('@assets/images/bg/bg_teeth.jpg')).downloadAsync(),
+    Asset.fromModule(require('@assets/images/bg/bg_plain.jpg')).downloadAsync(),
     Asset.fromModule(require('@assets/images/logo.png')).downloadAsync(),
   ]);
 

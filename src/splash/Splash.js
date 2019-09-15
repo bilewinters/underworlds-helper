@@ -1,13 +1,12 @@
 /* eslint-disable global-require */
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { Asset } from 'expo-asset';
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 
+import designTokens from '@design/tokens';
 import { BackgroundGlass, Logo } from '@/components';
 import { initialiseStore } from '@/store';
-import designTokens from '@design/tokens';
 import buildInfo from '../../buildInfo.json';
 
 const styles = StyleSheet.create({
@@ -29,7 +28,6 @@ const loadAssets = async () =>
     Font.loadAsync({
       'sava-pro-semibold': require('@assets/fonts/SavaPro-Semibold.otf'),
     }),
-    Asset.fromModule(require('@assets/images/bg/bg_plain.jpg')).downloadAsync(),
     initialiseStore(),
   ]);
 

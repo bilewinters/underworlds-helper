@@ -16,12 +16,15 @@ jobs:
     - stage: publish
       name: 'Publish Javascript'
       script:
+        - bash scripts/tidy.sh
         - bash scripts/publish.sh
     - stage: build
       name: 'Build iOS'
       script:
+        - bash scripts/tidy.sh
         - bash scripts/buildApple.sh
     - stage: build
       name: 'Build Android'
       script:
+        - bash scripts/tidy.sh
         - bash scripts/buildAndroid.sh
