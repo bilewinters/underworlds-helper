@@ -7,7 +7,7 @@ cache:
 
 stages:
   - name: publish
-    if: branch = master
+    if: branch = deploy
   - name: build
     if: branch = deploy
 
