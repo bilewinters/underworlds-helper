@@ -1,8 +1,13 @@
 import React from 'react';
-import { View, TouchableOpacity, Platform } from 'react-native';
+import { View, TouchableOpacity, Platform, Image } from 'react-native';
 import designTokens from '@design/tokens';
 import { Title } from './Text';
 import { getTitleFontPaddingTop } from '@/utils';
+
+const activationImage = require('@assets/images/tokens/activation.png');
+const activationUsedImage = require('@assets/images/tokens/activation-used.png');
+const gloryImage = require('@assets/images/tokens/glory.png');
+const gloryUsedImage = require('@assets/images/tokens/glory-used.png');
 
 const tokenBase = {
   alignItems: 'center',
@@ -57,9 +62,11 @@ const ActivationToken = ({ activationIndex, used, onPress, large }) => (
       ...(large ? styles.largeToken : styles.smallToken),
     }}
   >
-    <View style={{ paddingTop: getTitleFontPaddingTop(Platform.OS) }}>
-      <Title>{(activationIndex % 4) + 1}</Title>
-    </View>
+    <Image
+      source={used ? activationUsedImage : activationImage}
+      style={large ? styles.largeToken : styles.smallToken}
+      resizeMode="contain"
+    />
   </Token>
 );
 
@@ -71,7 +78,13 @@ const GloryToken = ({ gloryIndex, used, onPress, large }) => (
       ...(used ? styles.spentGlory : styles.unspentGlory),
       ...(large ? styles.largeToken : styles.smallToken),
     }}
-  />
+  >
+    <Image
+      source={used ? gloryUsedImage : gloryImage}
+      style={large ? styles.largeToken : styles.smallToken}
+      resizeMode="contain"
+    />
+  </Token>
 );
 
 const AT = {

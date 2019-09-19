@@ -3,6 +3,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
+import { Asset } from 'expo-asset';
 
 import designTokens from '@design/tokens';
 import { BackgroundGlass, Logo } from '@/components';
@@ -28,6 +29,10 @@ const loadAssets = async () =>
     Font.loadAsync({
       'sava-pro-semibold': require('@assets/fonts/SavaPro-Semibold.otf'),
     }),
+    Asset.fromModule(require('@assets/images/tokens/activation.png')).downloadAsync(),
+    Asset.fromModule(require('@assets/images/tokens/activation-used.png')).downloadAsync(),
+    Asset.fromModule(require('@assets/images/tokens/glory.png')).downloadAsync(),
+    Asset.fromModule(require('@assets/images/tokens/glory-used.png')).downloadAsync(),
     initialiseStore(),
   ]);
 
