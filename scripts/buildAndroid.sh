@@ -54,4 +54,4 @@ echo "---- Upload App (APK) to Play store ----"
 echo "----------------------------------------"
 echo ""
 echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
-node_modules/expo-cli/bin/expo.js upload:android --key /tmp/play_key.json --path uwhelper.apk
+node_modules/expo-cli/bin/expo.js upload:android --key /tmp/play_key.json --path uwhelper.apk --track alpha
