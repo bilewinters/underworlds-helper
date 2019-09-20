@@ -3,9 +3,9 @@ import React from 'react';
 import { View, SafeAreaView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
-import { BackgroundGlass, Heading, Title, Label, Header, Button } from '@/components';
 import designTokens from '@design/tokens';
-import { moveBackToGame, moveToMenu } from './gameReducer';
+import { BackgroundGlass, Heading, Title, Label, Header, Button } from '@/components';
+import { moveBackToGame, completeGame } from './gameReducer';
 
 const styles = StyleSheet.create({
   container: {
@@ -49,7 +49,7 @@ const Summary = ({ players, dispatch }) => (
       ))}
       <View style={styles.summaryButtonsContainer}>
         <SummaryButton onPress={() => moveBackToGame(dispatch)}>Back to game</SummaryButton>
-        <SummaryButton onPress={() => moveToMenu(dispatch)}>Menu</SummaryButton>
+        <SummaryButton onPress={() => completeGame(dispatch)}>Menu</SummaryButton>
       </View>
     </SafeAreaView>
   </BackgroundGlass>

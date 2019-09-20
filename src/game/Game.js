@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 import { BackgroundPlain, Title, Header, Button } from '@/components';
-import { nextRound, previousRound, moveToSummary } from './gameReducer';
+import { nextRound, moveToSummary, moveToMenu } from './gameReducer';
 import { activationsForRound } from './gameUtils';
 import Player from './Player';
 
@@ -28,7 +28,7 @@ class Game extends React.Component {
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       if (Actions.currentScene === 'game') {
         const { dispatch } = this.props;
-        previousRound(dispatch);
+        moveToMenu(dispatch);
         return true;
       }
       return false;

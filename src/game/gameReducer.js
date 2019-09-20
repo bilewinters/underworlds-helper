@@ -86,10 +86,16 @@ const moveBackToGame = dispatch => {
   dispatch({ type: moveBackToGameType });
 };
 
-const moveToMenu = dispatch => {
+const completeGame = dispatch => {
   dispatch({
     type: completeGameType,
   });
+  dispatch({
+    type: moveToMenuType,
+  });
+};
+
+const moveToMenu = dispatch => {
   dispatch({
     type: moveToMenuType,
   });
@@ -215,5 +221,6 @@ export {
   previousRound,
   moveToSummary,
   moveBackToGame,
+  completeGame,
   moveToMenu,
 };
