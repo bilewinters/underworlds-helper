@@ -22,12 +22,21 @@ echo "----------------------------------------"
 echo "------- Starting App (APK) build -------"
 echo "----------------------------------------"
 echo ""
-node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish --no-wait > buildOutput.txt
+node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish --no-wait >buildOutput.txt 2>&1
 cat buildOutput.txt
-if [ $(grep -o "Build started, it may take a few minutes" buildOutput.txt | wc -l) == "0" ]; then
-    echo "Build did not start successfully. Aborting."
-    exit -1
-fi
+
+timeout=60
+while [ $(grep -o "Build started, it may take a few minutes" buildOutput.txt | wc -l) == "0" ]; do
+    timeout=$[ $timeout - 1 ]
+    if [ $timeout -lt 1 ]; then
+        echo "Unable to start build. Aborting."
+        exit -1
+    fi
+    echo "Build did not start. Trying again after a short wait..."
+    sleep 30
+    node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish --no-wait >buildOutput.txt 2>&1
+    cat buildOutput.txt
+done
 
 echo ""
 echo "----------------------------------------"

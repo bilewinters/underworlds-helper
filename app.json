@@ -25,6 +25,7 @@
     "android": {
       "package": "com.wordsspeaklouder.uwhelper",
       "versionCode": 1,
+      "icon": "./assets/images/bg/iconAndroid.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/bg/iconAndroidFG.png",
         "backgroundColor": "#530308"
