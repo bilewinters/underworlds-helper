@@ -9,10 +9,10 @@ import {
   Platform,
 } from 'react-native';
 
+import designTokens from '@design/tokens';
 import { Heading, Label, GloryToken, largeToken, smallToken } from '@/components';
 import { getTitleFontPaddingTop } from '@/utils';
 import { sizes } from '@/constants';
-import designTokens from '@design/tokens';
 
 const tokenPadding = 16;
 const largeControlWidth = largeToken.width * 4 + tokenPadding * 3;
@@ -87,33 +87,58 @@ const styles = StyleSheet.create({
   },
 });
 
-const Glory = ({ glory, onAddGlory, onRemoveGlory, onFlipGlory, size = sizes.large }) => (
+const Glory = ({
+  glory,
+  onAddGlory,
+  onRemoveGlory,
+  onFlipGlory,
+  playerIndex,
+  size = sizes.large,
+}) => (
   <View style={styles.container}>
     <GloryControls
       gloryCount={glory.length}
       onAddGlory={onAddGlory}
       onRemoveGlory={onRemoveGlory}
+      playerIndex={playerIndex}
       size={size}
     />
-    <GloryPoints glory={glory} onFlipGlory={onFlipGlory} size={size} />
+    <GloryPoints glory={glory} onFlipGlory={onFlipGlory} size={size} playerIndex={playerIndex} />
   </View>
 );
 
-const GloryControls = ({ gloryCount, onAddGlory, onRemoveGlory, size }) => (
+const GloryControls = ({ gloryCount, onAddGlory, onRemoveGlory, playerIndex, size }) => (
   <View style={styles.gloryContainer}>
     {/* eslint-disable-next-line react-native/no-raw-text */}
     <Label>Glory</Label>
     <View style={size === sizes.large ? styles.gloryControlsLarge : styles.gloryControlsSmall}>
-      <GloryButton onPress={onRemoveGlory} text="-" size={size} />
-      <GloryCount size={size}>{gloryCount}</GloryCount>
-      <GloryButton onPress={onAddGlory} text="+" size={size} />
+      <GloryButton
+        onPress={onRemoveGlory}
+        text="-"
+        size={size}
+        testID={`player-${playerIndex}-glory-remove-button`}
+      />
+      <GloryCount size={size} testID={`player-${playerIndex}-glory-count`}>
+        {gloryCount}
+      </GloryCount>
+      <GloryButton
+        onPress={onAddGlory}
+        text="+"
+        size={size}
+        testID={`player-${playerIndex}-glory-add-button`}
+      />
     </View>
   </View>
 );
 
-const GloryButton = ({ text, onPress, size }) => (
+const GloryButton = ({ text, onPress, testID, size }) => (
   <TouchableOpacity onPress={onPress}>
-    <View style={size === sizes.large ? styles.gloryButtonLarge : styles.gloryButtonSmall}>
+    <View
+      style={size === sizes.large ? styles.gloryButtonLarge : styles.gloryButtonSmall}
+      testID={testID}
+      accessible
+      accessibilityLabel={testID}
+    >
       <Text
         style={size === sizes.large ? styles.gloryButtonTextLarge : styles.gloryButtonTextSmall}
       >
@@ -123,13 +148,17 @@ const GloryButton = ({ text, onPress, size }) => (
   </TouchableOpacity>
 );
 
-const GloryCount = ({ children, size }) => (
+const GloryCount = ({ children, size, testID }) => (
   <View style={size === sizes.large ? styles.gloryCountLarge : styles.gloryCountSmall}>
-    {size === sizes.large ? <Heading>{children}</Heading> : <Label>{children}</Label>}
+    {size === sizes.large ? (
+      <Heading testID={testID}>{children}</Heading>
+    ) : (
+      <Label testID={testID}>{children}</Label>
+    )}
   </View>
 );
 
-const GloryPoints = ({ glory, onFlipGlory, size }) => {
+const GloryPoints = ({ glory, onFlipGlory, playerIndex, size }) => {
   const tokenWholeWidth =
     (size === sizes.large ? largeToken.width : smallToken.width) + tokenPadding;
   const gloryPointsContainerWidth =
@@ -146,6 +175,7 @@ const GloryPoints = ({ glory, onFlipGlory, size }) => {
               id={gloryIndex}
               used={used}
               onPress={() => onFlipGlory(gloryIndex)}
+              testID={`player-${playerIndex}-glory-token-${gloryIndex}`}
             />
           ))}
         </View>

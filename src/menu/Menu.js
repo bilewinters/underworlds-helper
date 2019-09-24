@@ -36,14 +36,14 @@ class Menu extends React.Component {
       <BackgroundGlass>
         <SafeAreaView style={styles.container}>
           <TouchableOpacity onPress={() => initialiseGame(1, dispatch)}>
-            <Heading>1 Player</Heading>
+            <Heading testID="menu-1-player-button">1 Player</Heading>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => initialiseGame(2, dispatch)}>
-            <Heading>2 Players</Heading>
+            <Heading testID="menu-2-player-button">2 Players</Heading>
           </TouchableOpacity>
           {currentGameId && (
             <TouchableOpacity onPress={() => continueGame(dispatch)}>
-              <Heading>Continue</Heading>
+              <Heading testID="menu-continue-button">Continue</Heading>
             </TouchableOpacity>
           )}
         </SafeAreaView>

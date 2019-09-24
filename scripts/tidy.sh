@@ -1,6 +1,6 @@
 #!/bin/bash
 
 echo "Tidying up assets before publishing..."
-rm -rf assets/images/old
-rm -f assets/images/bg/*.xcf
+rm -rf assets/images/ss
+rm -rf marketing
 echo "Tidied."

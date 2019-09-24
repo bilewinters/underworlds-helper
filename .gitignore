@@ -10,3 +10,7 @@ npm-debug.*
 
 buildOutput.txt
 buildStatus.txt
+appium-log.txt
+uwhelper-simulator.tar.gz
+uwhelper-simulator.zip
+uwhelper.app

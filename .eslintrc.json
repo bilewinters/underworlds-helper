@@ -42,7 +42,8 @@
     "import/no-extraneous-dependencies": 0,
     "react-native/sort-styles": 0,
     "react/jsx-fragments": 0,
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "react/jsx-props-no-spreading": 0
   },
   "env": {
     "jest/globals": true,

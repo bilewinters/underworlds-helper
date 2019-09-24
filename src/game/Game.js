@@ -45,9 +45,10 @@ class Game extends React.Component {
       <BackgroundPlain>
         <Header>
           <View style={styles.roundTextWrap}>
-            <Title>{`Round ${round}`}</Title>
+            <Title testID="round-label">{`Round ${round}`}</Title>
             {allRoundActivationsUsed(players, round) ? (
               <Button.Small
+                testID="end-of-round-button"
                 text="End Round"
                 onPress={() => (round < 3 ? nextRound(dispatch) : moveToSummary(dispatch))}
               />

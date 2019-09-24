@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Activations = ({ activations, round, onPress, size = sizes.large }) => (
+const Activations = ({ activations, round, onPress, playerIndex, size = sizes.large }) => (
   <View style={styles.activationsContainer}>
     <Label>Activations</Label>
     <View style={size === sizes.large ? styles.activationsLarge : styles.activationsSmall}>
@@ -40,6 +40,7 @@ const Activations = ({ activations, round, onPress, size = sizes.large }) => (
             activationIndex={activationIndex}
             used={used}
             onPress={onPress}
+            testID={`player-${playerIndex}-activation-token-${activationIndex}`}
           />
         );
       })}

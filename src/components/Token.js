@@ -1,8 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, Platform, Image } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import designTokens from '@design/tokens';
-import { Title } from './Text';
-import { getTitleFontPaddingTop } from '@/utils';
 
 const activationImage = require('@assets/images/tokens/activation.png');
 const activationUsedImage = require('@assets/images/tokens/activation-used.png');
@@ -47,16 +45,19 @@ const styles = {
   },
 };
 
-const Token = ({ id, style, onPress, children }) => (
+const Token = ({ id, style, onPress, children, testID }) => (
   <TouchableOpacity onPress={() => onPress(id)}>
-    <View style={style}>{children}</View>
+    <View style={style} testID={testID} accessible accessibilityLabel={testID}>
+      {children}
+    </View>
   </TouchableOpacity>
 );
 
-const ActivationToken = ({ activationIndex, used, onPress, large }) => (
+const ActivationToken = ({ activationIndex, used, onPress, large, testID }) => (
   <Token
     onPress={onPress}
     id={activationIndex}
+    testID={testID}
     style={{
       ...(used ? styles.activationUsed : styles.activation),
       ...(large ? styles.largeToken : styles.smallToken),
@@ -70,10 +71,11 @@ const ActivationToken = ({ activationIndex, used, onPress, large }) => (
   </Token>
 );
 
-const GloryToken = ({ gloryIndex, used, onPress, large }) => (
+const GloryToken = ({ gloryIndex, used, onPress, large, testID }) => (
   <Token
     onPress={onPress}
     id={gloryIndex}
+    testID={testID}
     style={{
       ...(used ? styles.spentGlory : styles.unspentGlory),
       ...(large ? styles.largeToken : styles.smallToken),

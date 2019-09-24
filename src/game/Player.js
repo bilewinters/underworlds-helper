@@ -18,12 +18,14 @@ const Player = ({ playerIndex, activations, glory, round, multiPlayer, dispatch 
   <View style={styles.container}>
     <Activations
       activations={activations}
+      playerIndex={playerIndex}
       round={round}
       onPress={activationIndex => flipActivation(playerIndex, activationIndex, dispatch)}
       size={multiPlayer ? sizes.small : sizes.large}
     />
     <Glory
       glory={glory}
+      playerIndex={playerIndex}
       onAddGlory={() => addGlory(playerIndex, dispatch)}
       onRemoveGlory={() => removeGlory(playerIndex, dispatch)}
       onFlipGlory={gloryIndex => flipGlory(playerIndex, gloryIndex, dispatch)}

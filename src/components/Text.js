@@ -22,8 +22,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Heading = ({ children, style }) => (
-  <Text style={[styles.heading, style]}>{children}</Text>
+export const Heading = ({ children, style, testID }) => (
+  <Text style={[styles.heading, style]} testID={testID} accessible accessibilityLabel={testID}>
+    {children}
+  </Text>
 );
-export const Title = ({ children, style }) => <Text style={[styles.title, style]}>{children}</Text>;
-export const Label = ({ children, style }) => <Text style={[styles.label, style]}>{children}</Text>;
+export const Title = ({ children, style, testID }) => (
+  <Text style={[styles.title, style]} testID={testID} accessible accessibilityLabel={testID}>
+    {children}
+  </Text>
+);
+export const Label = ({ children, style, testID }) => (
+  <Text style={[styles.label, style]} testID={testID} accessible accessibilityLabel={testID}>
+    {children}
+  </Text>
+);

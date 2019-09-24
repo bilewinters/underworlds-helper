@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const ButtonBase = ({ TextComponent, style, text, onPress, children }) => (
+const ButtonBase = ({ TextComponent, style, text, onPress, children, testID }) => (
   <TouchableOpacity onPress={onPress}>
-    <View style={styles.button}>
+    <View style={styles.button} testID={testID} accessible accessibilityLabel={testID}>
       <View style={style}>
         {children || <TextComponent style={styles.buttonText}>{text}</TextComponent>}
       </View>
