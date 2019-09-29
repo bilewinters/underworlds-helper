@@ -19,10 +19,10 @@ node_modules/expo-cli/bin/expo.js login -u $EXPO_USERNAME -p $EXPO_PASSWORD
 
 echo ""
 echo "----------------------------------------"
-echo "------- Starting App (APK) build -------"
+echo "------- Starting App (AAB) build -------"
 echo "----------------------------------------"
 echo ""
-node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish --no-wait >buildOutput.txt 2>&1
+node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish --no-wait -t app-bundle >buildOutput.txt 2>&1
 cat buildOutput.txt
 
 timeout=60
@@ -34,13 +34,13 @@ while [ $(grep -o "Build started, it may take a few minutes" buildOutput.txt | w
     fi
     echo "Build did not start. Trying again after a short wait..."
     sleep 30
-    node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish --no-wait >buildOutput.txt 2>&1
+    node_modules/expo-cli/bin/expo.js build:android --release-channel prod --no-publish --no-wait -t app-bundle >buildOutput.txt 2>&1
     cat buildOutput.txt
 done
 
 echo ""
 echo "----------------------------------------"
-echo "------ Monitoring App (APK) build ------"
+echo "------ Monitoring App (AAB) build ------"
 echo "----------------------------------------"
 echo ""
 buildUrl=`grep "https://expo.io/builds/" buildOutput.txt`
@@ -49,18 +49,18 @@ bash scripts/waitForBuildCompletion.sh $buildUrl
 
 echo ""
 echo "----------------------------------------"
-echo "---------- Download built APK ----------"
+echo "---------- Download built AAB ----------"
 echo "----------------------------------------"
 echo ""
 node_modules/expo-cli/bin/expo.js build:status > buildStatus.txt
-apkUrl=`grep -A5 $buildUrl buildStatus.txt | grep "APK: https:"`
-apkUrl=${apkUrl/"APK: "/""}
-curl ${apkUrl} > uwhelper.apk
+aabUrl=`grep -A5 $buildUrl buildStatus.txt | grep "APK: https:"`
+aabUrl=${aabUrl/"APK: "/""}
+curl ${aabUrl} > uwhelper.aab
 
 echo ""
 echo "----------------------------------------"
-echo "---- Upload App (APK) to Play store ----"
+echo "---- Upload App (AAB) to Play store ----"
 echo "----------------------------------------"
 echo ""
 echo "$PLAY_JSON_KEY" | base64 --decode > /tmp/play_key.json
-node_modules/expo-cli/bin/expo.js upload:android --key /tmp/play_key.json --path uwhelper.apk --track alpha
+node_modules/expo-cli/bin/expo.js upload:android --key /tmp/play_key.json --path uwhelper.aab --track alpha
