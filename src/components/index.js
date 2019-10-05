@@ -1,5 +1,5 @@
 import { BackgroundPlain, BackgroundGlass } from './Background';
-import { Heading, Title, Label } from './Text';
+import { Heading, SubHeading, MinorHeading, Title, Label } from './Text';
 import Logo from './Logo';
 import { ActivationToken, GloryToken, largeToken, smallToken } from './Token';
 import Header from './Header';
@@ -9,6 +9,8 @@ export {
   BackgroundPlain,
   BackgroundGlass,
   Heading,
+  SubHeading,
+  MinorHeading,
   Title,
   Label,
   Logo,

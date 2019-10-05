@@ -1,12 +1,13 @@
 /* eslint-disable react-native/no-raw-text */
 import React from 'react';
-import { View, SafeAreaView, StyleSheet, BackHandler } from 'react-native';
+import { View, SafeAreaView, StyleSheet, BackHandler, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 import { BackgroundPlain, Title, Header, Button } from '@/components';
 import { nextRound, moveToSummary, moveToMenu } from './gameReducer';
 import { activationsForRound } from './gameUtils';
+import { getTitleFontPaddingTop } from '@/utils';
 import Player from './Player';
 
 const styles = StyleSheet.create({
@@ -16,6 +17,7 @@ const styles = StyleSheet.create({
   roundTextWrap: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingTop: getTitleFontPaddingTop(Platform.OS),
   },
 });
 
@@ -23,7 +25,7 @@ const allRoundActivationsUsed = (players, round) =>
   players.every(({ activations }) =>
     activationsForRound(activations, round).every(used => used === true));
 
-class Game extends React.Component {
+class Round extends React.Component {
   componentDidMount() {
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       if (Actions.currentScene === 'game') {
@@ -43,16 +45,19 @@ class Game extends React.Component {
     const { round, players, dispatch } = this.props;
     return (
       <BackgroundPlain>
-        <Header>
-          <View style={styles.roundTextWrap}>
-            <Title testID="round-label">{`Round ${round}`}</Title>
-            {allRoundActivationsUsed(players, round) ? (
+        <Header
+          right={
+            allRoundActivationsUsed(players, round) && (
               <Button.Small
                 testID="end-of-round-button"
                 text="End Round"
                 onPress={() => (round < 3 ? nextRound(dispatch) : moveToSummary(dispatch))}
               />
-            ) : null}
+            )
+          }
+        >
+          <View style={styles.roundTextWrap}>
+            <Title testID="round-label">{`Round ${round}`}</Title>
           </View>
         </Header>
         <SafeAreaView style={styles.container}>
@@ -70,8 +75,11 @@ class Game extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = round => state => ({
   ...state.game.games[state.game.currentGameId].gameState,
+  round,
 });
 
-export default connect(mapStateToProps)(Game);
+export const Round1 = connect(mapStateToProps(1))(Round);
+export const Round2 = connect(mapStateToProps(2))(Round);
+export const Round3 = connect(mapStateToProps(3))(Round);

@@ -138,7 +138,7 @@ const reducer = (state = { games: {} }, action) => {
       };
     }
     case moveToGameType: {
-      Actions.game();
+      Actions.push(`round${state.games[state.currentGameId].gameState.round}`);
       return state;
     }
     case flipActivationType: {
@@ -173,7 +173,7 @@ const reducer = (state = { games: {} }, action) => {
       return newState;
     }
     case nextRoundMoveType: {
-      Actions.game();
+      Actions.push(`round${state.games[state.currentGameId].gameState.round}`);
       return state;
     }
     case previousRoundUpdateType: {

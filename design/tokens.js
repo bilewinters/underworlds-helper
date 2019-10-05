@@ -23,6 +23,8 @@ const text = {
   primaryColor: pallet.white,
   font: 'sava-pro-semibold',
   headingSize: 56,
+  subHeadingSize: 48,
+  minorHeadingSize: 36,
   titleSize: 24,
   labelSize: 16,
 };

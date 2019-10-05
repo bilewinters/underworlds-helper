@@ -6,7 +6,7 @@ import CardStackStyleInterpolator from 'react-navigation-stack/dist/views/StackV
 import ToastableScreen from '@/system/Toast';
 import Splash from '@/splash/Splash';
 import Menu from '@/menu/Menu';
-import Game from '@/game/Game';
+import { Round1, Round2, Round3 } from '@/game/Round';
 import Summary from '@/game/Summary';
 import { getStore } from '@/store';
 
@@ -31,7 +31,11 @@ const Root = () => {
                 switch (scene.route.routeName) {
                   case 'menu':
                     return CardStackStyleInterpolator.forHorizontal(props);
-                  case 'game':
+                  case 'round1':
+                    return CardStackStyleInterpolator.forHorizontal(props);
+                  case 'round2':
+                    return CardStackStyleInterpolator.forHorizontal(props);
+                  case 'round3':
                     return CardStackStyleInterpolator.forHorizontal(props);
                   case 'summary':
                     return CardStackStyleInterpolator.forHorizontal(props);
@@ -42,7 +46,9 @@ const Root = () => {
             })}
           >
             <Scene key="menu" initial gesturesEnabled={false} component={Menu} />
-            <Scene key="game" gesturesEnabled={false} component={Game} />
+            <Scene key="round1" gesturesEnabled={false} component={Round1} />
+            <Scene key="round2" gesturesEnabled={false} component={Round2} />
+            <Scene key="round3" gesturesEnabled={false} component={Round3} />
             <Scene key="summary" gesturesEnabled={false} component={Summary} />
           </Stack>
         </Router>

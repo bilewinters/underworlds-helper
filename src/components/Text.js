@@ -12,6 +12,14 @@ const styles = StyleSheet.create({
     ...common,
     fontSize: tokens.text.headingSize,
   },
+  subHeading: {
+    ...common,
+    fontSize: tokens.text.subHeadingSize,
+  },
+  minorHeading: {
+    ...common,
+    fontSize: tokens.text.minorHeadingSize,
+  },
   title: {
     ...common,
     fontSize: tokens.text.titleSize,
@@ -24,6 +32,16 @@ const styles = StyleSheet.create({
 
 export const Heading = ({ children, style, testID }) => (
   <Text style={[styles.heading, style]} testID={testID} accessible accessibilityLabel={testID}>
+    {children}
+  </Text>
+);
+export const SubHeading = ({ children, style, testID }) => (
+  <Text style={[styles.subHeading, style]} testID={testID} accessible accessibilityLabel={testID}>
+    {children}
+  </Text>
+);
+export const MinorHeading = ({ children, style, testID }) => (
+  <Text style={[styles.minorHeading, style]} testID={testID} accessible accessibilityLabel={testID}>
     {children}
   </Text>
 );

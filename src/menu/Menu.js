@@ -4,7 +4,7 @@ import { BackHandler, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-n
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
-import { BackgroundGlass, Heading } from '@/components';
+import { BackgroundGlass, SubHeading } from '@/components';
 import { initialiseGame, continueGame } from '@/game/gameReducer';
 
 const styles = StyleSheet.create({
@@ -36,14 +36,14 @@ class Menu extends React.Component {
       <BackgroundGlass>
         <SafeAreaView style={styles.container}>
           <TouchableOpacity onPress={() => initialiseGame(1, dispatch)}>
-            <Heading testID="menu-1-player-button">1 Player</Heading>
+            <SubHeading testID="menu-1-player-button">1 Player</SubHeading>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => initialiseGame(2, dispatch)}>
-            <Heading testID="menu-2-player-button">2 Players</Heading>
+            <SubHeading testID="menu-2-player-button">2 Players</SubHeading>
           </TouchableOpacity>
           {currentGameId && (
             <TouchableOpacity onPress={() => continueGame(dispatch)}>
-              <Heading testID="menu-continue-button">Continue</Heading>
+              <SubHeading testID="menu-continue-button">Continue</SubHeading>
             </TouchableOpacity>
           )}
         </SafeAreaView>
