@@ -1,14 +1,18 @@
 /* eslint-disable react-native/no-raw-text */
 import React from 'react';
-import { BackHandler, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
+import { BackHandler, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
-import { BackgroundGlass, SubHeading } from '@/components';
+import { BackgroundGlass, SubHeading, Header, BurgerIcon } from '@/components';
 import { initialiseGame, continueGame } from '@/game/gameReducer';
+import { showSideMenu } from '@/system/systemReducer';
 
 const styles = StyleSheet.create({
-  container: {
+  screenContainer: {
+    flex: 1,
+  },
+  menuContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -34,18 +38,23 @@ class Menu extends React.Component {
     const { dispatch, currentGameId } = this.props;
     return (
       <BackgroundGlass>
-        <SafeAreaView style={styles.container}>
-          <TouchableOpacity onPress={() => initialiseGame(1, dispatch)}>
-            <SubHeading testID="menu-1-player-button">1 Player</SubHeading>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => initialiseGame(2, dispatch)}>
-            <SubHeading testID="menu-2-player-button">2 Players</SubHeading>
-          </TouchableOpacity>
-          {currentGameId && (
-            <TouchableOpacity onPress={() => continueGame(dispatch)}>
-              <SubHeading testID="menu-continue-button">Continue</SubHeading>
+        <SafeAreaView style={styles.screenContainer}>
+          <Header
+            left={<BurgerIcon onPress={() => showSideMenu(dispatch)} />}
+          />
+          <View style={styles.menuContainer}>
+            <TouchableOpacity onPress={() => initialiseGame(1, dispatch)}>
+              <SubHeading testID="menu-1-player-button">1 Player</SubHeading>
             </TouchableOpacity>
-          )}
+            <TouchableOpacity onPress={() => initialiseGame(2, dispatch)}>
+              <SubHeading testID="menu-2-player-button">2 Players</SubHeading>
+            </TouchableOpacity>
+            {currentGameId && (
+              <TouchableOpacity onPress={() => continueGame(dispatch)}>
+                <SubHeading testID="menu-continue-button">Continue</SubHeading>
+              </TouchableOpacity>
+            )}
+          </View>
         </SafeAreaView>
       </BackgroundGlass>
     );

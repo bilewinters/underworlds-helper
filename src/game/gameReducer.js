@@ -28,7 +28,9 @@ const initialiseGame = (numberOfPlayers, dispatch) => {
 };
 
 const continueGame = dispatch => {
-  dispatch({ type: moveToGameType });
+  if (!Actions.currentScene.startsWith('round')) {
+    dispatch({ type: moveToGameType });
+  }
 };
 
 const flipActivation = (playerIndex, activationIndex, dispatch) =>
@@ -200,7 +202,9 @@ const reducer = (state = { games: {} }, action) => {
       return newState;
     }
     case moveToMenuType: {
-      Actions.popTo('menu');
+      if (Actions.currentScene !== 'menu') {
+        Actions.popTo('menu');
+      }
       return state;
     }
     default:

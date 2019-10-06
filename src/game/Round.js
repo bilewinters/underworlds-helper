@@ -4,8 +4,9 @@ import { View, SafeAreaView, StyleSheet, BackHandler, Platform } from 'react-nat
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
-import { BackgroundPlain, Title, Header, Button } from '@/components';
+import { BackgroundPlain, Title, Header, Button, BurgerIcon } from '@/components';
 import { nextRound, moveToSummary, moveToMenu } from './gameReducer';
+import { showSideMenu } from '@/system/systemReducer';
 import { activationsForRound } from './gameUtils';
 import { getTitleFontPaddingTop } from '@/utils';
 import Player from './Player';
@@ -28,7 +29,7 @@ const allRoundActivationsUsed = (players, round) =>
 class Round extends React.Component {
   componentDidMount() {
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      if (Actions.currentScene === 'game') {
+      if (Actions.currentScene.startsWith('round')) {
         const { dispatch } = this.props;
         moveToMenu(dispatch);
         return true;
@@ -46,6 +47,7 @@ class Round extends React.Component {
     return (
       <BackgroundPlain>
         <Header
+          left={<BurgerIcon onPress={() => showSideMenu(dispatch)} />}
           right={
             allRoundActivationsUsed(players, round) && (
               <Button.Small

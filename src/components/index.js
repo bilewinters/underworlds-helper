@@ -4,6 +4,7 @@ import Logo from './Logo';
 import { ActivationToken, GloryToken, largeToken, smallToken } from './Token';
 import Header from './Header';
 import Button from './Button';
+import { BurgerIcon, CloseIcon } from './Icons';
 
 export {
   BackgroundPlain,
@@ -20,4 +21,6 @@ export {
   largeToken,
   smallToken,
   Button,
+  BurgerIcon,
+  CloseIcon,
 };
