@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const Player = ({ playerIndex, activations, glory, round, multiPlayer, dispatch }) => (
-  <View style={styles.container}>
+const Player = ({ playerIndex, activations, glory, round, multiPlayer, style, dispatch }) => (
+  <View style={[styles.container, style]}>
     <Activations
       activations={activations}
       playerIndex={playerIndex}

@@ -12,6 +12,7 @@ const previousRoundUpdateType = 'PREVIOUS_ROUND_UPDATE';
 const previousRoundMoveType = 'PREVIOUS_ROUND_MOVE';
 const moveToSummaryType = 'MOVE_TO_SUMMARY';
 const moveBackToGameType = 'MOVE_BACK_TO_GAME';
+const vsFlipType = 'VS_FLIP_GAME';
 const completeGameType = 'COMPLETE_GAME';
 const moveToMenuType = 'MOVE_TO_MENU';
 const moveToGameType = 'MOVE_TO_GAME';
@@ -88,6 +89,10 @@ const moveBackToGame = dispatch => {
   dispatch({ type: moveBackToGameType });
 };
 
+const vsFlip = dispatch => {
+  dispatch({ type: vsFlipType });
+};
+
 const completeGame = dispatch => {
   dispatch({
     type: completeGameType,
@@ -121,6 +126,7 @@ const newGame = (id, startDateTime, numberOfPlayers) => ({
   gameState: {
     round: 1,
     complete: false,
+    vs: false,
     players: new Array(numberOfPlayers)
       .fill(undefined)
       .map((_, playerIndex) => initialisePlayer(playerIndex)),
@@ -196,6 +202,12 @@ const reducer = (state = { games: {} }, action) => {
       Actions.pop();
       return state;
     }
+    case vsFlipType: {
+      const { vs } = state.games[state.currentGameId].gameState;
+      const newState = deepClone(state);
+      newState.games[newState.currentGameId].gameState.vs = !vs;
+      return newState;
+    }
     case completeGameType: {
       const newState = deepClone(state);
       newState.games[newState.currentGameId].gameState.complete = true;
@@ -225,6 +237,7 @@ export {
   previousRound,
   moveToSummary,
   moveBackToGame,
+  vsFlip,
   completeGame,
   moveToMenu,
 };

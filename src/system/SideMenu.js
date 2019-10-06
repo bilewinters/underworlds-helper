@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-raw-text */
 import React, { useRef, useEffect } from 'react';
 import {
   View,
@@ -31,7 +32,6 @@ const styles = StyleSheet.create({
   screenOverlay: {
     flex: 1,
     backgroundColor: tokens.color.primary,
-    opacity: 0.6,
   },
   menuItem: {
     paddingTop: getLabelFontPaddingTop(Platform.OS),
@@ -60,13 +60,21 @@ const MenuItem = ({ children, onPress }) => (
 const SideMenu = ({ dispatch, showSideMenu, children }) => {
   const { width } = Dimensions.get('window');
   const menuPosition = useRef(new Animated.Value(-width)).current;
+  const overlayOpacity = useRef(new Animated.Value(0)).current;
   useEffect(() => {
-    Animated.timing(menuPosition, {
-      toValue: showSideMenu ? 0 : -width,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  }, [showSideMenu]);
+    Animated.parallel([
+      Animated.timing(menuPosition, {
+        toValue: showSideMenu ? 0 : -width,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(overlayOpacity, {
+        toValue: showSideMenu ? 0.6 : 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [showSideMenu, width]);
 
   return (
     <>
@@ -118,7 +126,7 @@ const SideMenu = ({ dispatch, showSideMenu, children }) => {
           </SafeAreaView>
         </View>
         <TouchableWithoutFeedback onPress={() => hideSideMenu(dispatch)}>
-          <View style={styles.screenOverlay} />
+          <Animated.View style={[styles.screenOverlay, { opacity: overlayOpacity }]} />
         </TouchableWithoutFeedback>
       </Animated.View>
     </>

@@ -20,3 +20,9 @@ export const CloseIcon = ({ onPress, style }) => (
     <Feather name="x" size={32} color="white" style={style} />
   </TouchableOpacity>
 );
+
+export const RotateIcon = ({ onPress, style = { marginRight: 12 } }) => (
+  <TouchableOpacity onPress={onPress} hitSlop={hitSlop}>
+    <Feather name="rotate-cw" size={32} color="white" style={style} />
+  </TouchableOpacity>
+);

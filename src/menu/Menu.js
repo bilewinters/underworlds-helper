@@ -39,9 +39,7 @@ class Menu extends React.Component {
     return (
       <BackgroundGlass>
         <SafeAreaView style={styles.screenContainer}>
-          <Header
-            left={<BurgerIcon onPress={() => showSideMenu(dispatch)} />}
-          />
+          <Header left={<BurgerIcon onPress={() => showSideMenu(dispatch)} />} />
           <View style={styles.menuContainer}>
             <TouchableOpacity onPress={() => initialiseGame(1, dispatch)}>
               <SubHeading testID="menu-1-player-button">1 Player</SubHeading>
