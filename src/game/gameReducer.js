@@ -28,6 +28,18 @@ const initialiseGame = (numberOfPlayers, dispatch) => {
   dispatch({ type: moveToGameType });
 };
 
+const initialiseMortisGame = dispatch => {
+  const now = new Date().getTime();
+  dispatch({
+    type: initialiseGameType,
+    numberOfPlayers: 1,
+    id: now,
+    startDateTime: now,
+    isArenaMortis: true,
+  });
+  dispatch({ type: moveToGameType });
+};
+
 const continueGame = dispatch => {
   if (!Actions.currentScene.startsWith('round')) {
     dispatch({ type: moveToGameType });
@@ -228,6 +240,7 @@ export default reducer;
 
 export {
   initialiseGame,
+  initialiseMortisGame,
   continueGame,
   flipActivation,
   addGlory,

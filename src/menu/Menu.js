@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 import { BackgroundGlass, SubHeading, Header, BurgerIcon } from '@/components';
-import { initialiseGame, continueGame } from '@/game/gameReducer';
+import { initialiseGame, initialiseMortisGame, continueGame } from '@/game/gameReducer';
 import { showSideMenu } from '@/system/systemReducer';
 
 const styles = StyleSheet.create({
