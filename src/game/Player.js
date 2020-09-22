@@ -3,7 +3,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
-import { flipActivation, addGlory, removeGlory, flipGlory } from './gameReducer';
+import { flipActivation, addGlory, removeGlory, flipGlory } from './gameReducerActions';
 import Activations from './Activations';
 import Glory from './Glory';
 import { sizes } from '@/constants';

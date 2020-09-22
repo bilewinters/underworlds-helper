@@ -1,129 +1,9 @@
-import { Actions } from 'react-native-router-flux';
 import { deepClone } from '@/utils';
-
-const initialiseGameType = 'INITIALISE_GAME';
-const flipActivationType = 'FLIP_ACTIVATION';
-const addGloryType = 'ADD_GLORY';
-const removeGloryType = 'REMOVE_GLORY';
-const flipGloryType = 'FLIP_GLORY';
-const nextRoundUpdateType = 'NEXT_ROUND_UPDATE';
-const nextRoundMoveType = 'NEXT_ROUND_MOVE';
-const previousRoundUpdateType = 'PREVIOUS_ROUND_UPDATE';
-const previousRoundMoveType = 'PREVIOUS_ROUND_MOVE';
-const moveToSummaryType = 'MOVE_TO_SUMMARY';
-const moveBackToGameType = 'MOVE_BACK_TO_GAME';
-const vsFlipType = 'VS_FLIP_GAME';
-const completeGameType = 'COMPLETE_GAME';
-const moveToMenuType = 'MOVE_TO_MENU';
-const moveToGameType = 'MOVE_TO_GAME';
-
-const initialiseGame = (numberOfPlayers, dispatch) => {
-  const now = new Date().getTime();
-  dispatch({
-    type: initialiseGameType,
-    numberOfPlayers,
-    id: now,
-    startDateTime: now,
-  });
-  dispatch({ type: moveToGameType });
-};
-
-const initialiseMortisGame = dispatch => {
-  const now = new Date().getTime();
-  dispatch({
-    type: initialiseGameType,
-    numberOfPlayers: 1,
-    id: now,
-    startDateTime: now,
-    isArenaMortis: true,
-  });
-  dispatch({ type: moveToGameType });
-};
-
-const continueGame = dispatch => {
-  if (!Actions.currentScene.startsWith('round')) {
-    dispatch({ type: moveToGameType });
-  }
-};
-
-const flipActivation = (playerIndex, activationIndex, dispatch) =>
-  dispatch({
-    type: flipActivationType,
-    playerIndex,
-    activationIndex,
-  });
-
-const addGlory = (playerIndex, dispatch) => {
-  dispatch({
-    type: addGloryType,
-    playerIndex,
-  });
-};
-
-const removeGlory = (playerIndex, dispatch) =>
-  dispatch({
-    type: removeGloryType,
-    playerIndex,
-  });
-
-const flipGlory = (playerIndex, gloryIndex, dispatch) =>
-  dispatch({
-    type: flipGloryType,
-    playerIndex,
-    gloryIndex,
-  });
-
-const nextRound = dispatch => {
-  dispatch({
-    type: nextRoundUpdateType,
-  });
-  dispatch({
-    type: nextRoundMoveType,
-  });
-};
-
-const previousRound = dispatch => {
-  dispatch({
-    type: previousRoundUpdateType,
-  });
-  dispatch({
-    type: previousRoundMoveType,
-  });
-};
-
-const moveToSummary = dispatch => {
-  dispatch({
-    type: moveToSummaryType,
-  });
-};
-
-const moveBackToGame = dispatch => {
-  dispatch({ type: moveBackToGameType });
-};
-
-const vsFlip = dispatch => {
-  dispatch({ type: vsFlipType });
-};
-
-const completeGame = dispatch => {
-  dispatch({
-    type: completeGameType,
-  });
-  dispatch({
-    type: moveToMenuType,
-  });
-};
-
-const moveToMenu = dispatch => {
-  dispatch({
-    type: moveToMenuType,
-  });
-};
+import { naviagationService } from '../navigationService';
+import { actionTypes } from './gameReducerActions';
 
 const getPlayerState = (state, playerIndex) =>
-  state.games[state.currentGameId].gameState.players.find(
-    player => player.playerIndex === playerIndex,
-  );
+  state.games[state.currentGameId].gameState.players.find(player => player.playerIndex === playerIndex);
 
 const initialisePlayer = playerIndex => ({
   playerIndex,
@@ -139,9 +19,7 @@ const newGame = (id, startDateTime, numberOfPlayers) => ({
     round: 1,
     complete: false,
     vs: false,
-    players: new Array(numberOfPlayers)
-      .fill(undefined)
-      .map((_, playerIndex) => initialisePlayer(playerIndex)),
+    players: new Array(numberOfPlayers).fill(undefined).map((_, playerIndex) => initialisePlayer(playerIndex)),
   },
   history: [],
 });
@@ -149,7 +27,7 @@ const newGame = (id, startDateTime, numberOfPlayers) => ({
 const reducer = (state = { games: {} }, action) => {
   const { games } = state;
   switch (action.type) {
-    case initialiseGameType: {
+    case actionTypes.initialiseGameType: {
       const { id, startDateTime, numberOfPlayers } = action;
       return {
         ...state,
@@ -157,78 +35,74 @@ const reducer = (state = { games: {} }, action) => {
         games: { ...games, [id]: newGame(id, startDateTime, numberOfPlayers) },
       };
     }
-    case moveToGameType: {
-      Actions.push(`round${state.games[state.currentGameId].gameState.round}`);
+    case actionTypes.moveToGameType: {
+      naviagationService.navigateTo(`round${state.games[state.currentGameId].gameState.round}`);
       return state;
     }
-    case flipActivationType: {
+    case actionTypes.flipActivationType: {
       const newState = deepClone(state);
       const playerState = getPlayerState(newState, action.playerIndex);
-      playerState.activations[action.activationIndex] = !playerState.activations[
-        action.activationIndex
-      ];
+      playerState.activations[action.activationIndex] = !playerState.activations[action.activationIndex];
       return newState;
     }
-    case addGloryType: {
+    case actionTypes.addGloryType: {
       const newState = deepClone(state);
       const playerState = getPlayerState(newState, action.playerIndex);
       playerState.glory.push(false);
       return newState;
     }
-    case removeGloryType: {
+    case actionTypes.removeGloryType: {
       const newState = deepClone(state);
       const playerState = getPlayerState(newState, action.playerIndex);
       playerState.glory.pop();
       return newState;
     }
-    case flipGloryType: {
+    case actionTypes.flipGloryType: {
       const newState = deepClone(state);
       const playerState = getPlayerState(newState, action.playerIndex);
       playerState.glory[action.gloryIndex] = !playerState.glory[action.gloryIndex];
       return newState;
     }
-    case nextRoundUpdateType: {
+    case actionTypes.nextRoundUpdateType: {
       const newState = deepClone(state);
       newState.games[newState.currentGameId].gameState.round += 1;
       return newState;
     }
-    case nextRoundMoveType: {
-      Actions.push(`round${state.games[state.currentGameId].gameState.round}`);
+    case actionTypes.nextRoundMoveType: {
+      naviagationService.navigateTo(`round${state.games[state.currentGameId].gameState.round}`);
       return state;
     }
-    case previousRoundUpdateType: {
+    case actionTypes.previousRoundUpdateType: {
       const newState = deepClone(state);
       const { round } = newState.games[newState.currentGameId].gameState;
       newState.games[newState.currentGameId].gameState.round = round > 1 ? round - 1 : round;
       return newState;
     }
-    case previousRoundMoveType: {
-      Actions.pop();
+    case actionTypes.previousRoundMoveType: {
+      naviagationService.goBack();
       return state;
     }
-    case moveToSummaryType: {
-      Actions.summary();
+    case actionTypes.moveToSummaryType: {
+      naviagationService.navigateTo('summary');
       return state;
     }
-    case moveBackToGameType: {
-      Actions.pop();
+    case actionTypes.moveBackToGameType: {
+      naviagationService.goBack();
       return state;
     }
-    case vsFlipType: {
+    case actionTypes.vsFlipType: {
       const { vs } = state.games[state.currentGameId].gameState;
       const newState = deepClone(state);
       newState.games[newState.currentGameId].gameState.vs = !vs;
       return newState;
     }
-    case completeGameType: {
+    case actionTypes.completeGameType: {
       const newState = deepClone(state);
       newState.games[newState.currentGameId].gameState.complete = true;
       return newState;
     }
-    case moveToMenuType: {
-      if (Actions.currentScene !== 'menu') {
-        Actions.popTo('menu');
-      }
+    case actionTypes.moveToMenuType: {
+      naviagationService.goToMenu();
       return state;
     }
     default:
@@ -237,20 +111,3 @@ const reducer = (state = { games: {} }, action) => {
 };
 
 export default reducer;
-
-export {
-  initialiseGame,
-  initialiseMortisGame,
-  continueGame,
-  flipActivation,
-  addGlory,
-  removeGlory,
-  flipGlory,
-  nextRound,
-  previousRound,
-  moveToSummary,
-  moveBackToGame,
-  vsFlip,
-  completeGame,
-  moveToMenu,
-};

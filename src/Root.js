@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Router, Stack, Scene } from 'react-native-router-flux';
 import { Provider } from 'react-redux';
-import CardStackStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 
+import { navigationRef } from '@/navigationService';
 import ToastableScreen from '@/system/Toast';
 import SideMenu from '@/system/SideMenu';
 import Splash from '@/splash/Splash';
@@ -11,7 +12,9 @@ import { Round1, Round2, Round3 } from '@/game/Round';
 import Summary from '@/game/Summary';
 import { getStore } from '@/store';
 
-const Root = () => {
+const Stack = createStackNavigator();
+
+export default function Root() {
   const [loaded, setLoaded] = useState(false);
 
   if (!loaded) {
@@ -22,42 +25,21 @@ const Root = () => {
     <Provider store={getStore()}>
       <ToastableScreen>
         <SideMenu>
-          <Router>
-            <Stack
-              hideNavBar
-              key="root"
-              panHandlers={null}
-              transitionConfig={() => ({
-                screenInterpolator: props => {
-                  const { scene } = props;
-                  switch (scene.route.routeName) {
-                    case 'menu':
-                      return CardStackStyleInterpolator.forHorizontal(props);
-                    case 'round1':
-                      return CardStackStyleInterpolator.forHorizontal(props);
-                    case 'round2':
-                      return CardStackStyleInterpolator.forHorizontal(props);
-                    case 'round3':
-                      return CardStackStyleInterpolator.forHorizontal(props);
-                    case 'summary':
-                      return CardStackStyleInterpolator.forHorizontal(props);
-                    default:
-                      return CardStackStyleInterpolator.forInitial;
-                  }
-                },
-              })}
+          <NavigationContainer ref={navigationRef}>
+            <Stack.Navigator
+              initialRouteName="menu"
+              headerMode="none"
+              screenOptions={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }}
             >
-              <Scene key="menu" initial gesturesEnabled={false} component={Menu} />
-              <Scene key="round1" gesturesEnabled={false} component={Round1} />
-              <Scene key="round2" gesturesEnabled={false} component={Round2} />
-              <Scene key="round3" gesturesEnabled={false} component={Round3} />
-              <Scene key="summary" gesturesEnabled={false} component={Summary} />
-            </Stack>
-          </Router>
+              <Stack.Screen name="menu" component={Menu} />
+              <Stack.Screen name="round1" component={Round1} />
+              <Stack.Screen name="round2" component={Round2} />
+              <Stack.Screen name="round3" component={Round3} />
+              <Stack.Screen name="summary" component={Summary} />
+            </Stack.Navigator>
+          </NavigationContainer>
         </SideMenu>
       </ToastableScreen>
     </Provider>
   );
-};
-
-export default Root;
+}

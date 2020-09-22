@@ -2,10 +2,9 @@
 import React from 'react';
 import { View, SafeAreaView, StyleSheet, BackHandler, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 
 import { BackgroundPlain, Title, Header, Button, BurgerIcon, RotateIcon } from '@/components';
-import { nextRound, moveToSummary, moveToMenu, vsFlip } from './gameReducer';
+import { nextRound, moveToSummary, moveToMenu, vsFlip } from './gameReducerActions';
 import { showSideMenu } from '@/system/systemReducer';
 import { activationsForRound } from './gameUtils';
 import { getTitleFontPaddingTop } from '@/utils';
@@ -25,8 +24,7 @@ const styles = StyleSheet.create({
 });
 
 const allRoundActivationsUsed = (players, round) =>
-  players.every(({ activations }) =>
-    activationsForRound(activations, round).every(used => used === true));
+  players.every(({ activations }) => activationsForRound(activations, round).every(used => used === true));
 
 class Round extends React.Component {
   componentDidMount() {

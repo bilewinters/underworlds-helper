@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import designTokens from '@design/tokens';
 import { BackgroundGlass, Heading, Title, Label, Header, Button } from '@/components';
-import { moveBackToGame, completeGame } from './gameReducer';
+import { moveBackToGame, completeGame } from './gameReducerActions';
 
 const styles = StyleSheet.create({
   container: {

@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 
 import { Label, Header, CloseIcon } from '@/components';
 import { hideSideMenu } from '@/system/systemReducer';
-import { initialiseGame, moveToMenu, continueGame } from '@/game/gameReducer';
+import { initialiseGame, moveToMenu, continueGame } from '@/game/gameReducerAtions';
 import { getLabelFontPaddingTop } from '@/utils';
 
 const styles = StyleSheet.create({
