@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-raw-text */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
 import {
   View,
   SafeAreaView,
@@ -9,20 +9,31 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Platform,
-} from 'react-native';
-import tokens from '@design/tokens';
-import { connect } from 'react-redux';
+} from "react-native";
+import tokens from "@design/tokens";
+import { connect } from "react-redux";
 
-import { Label, Header, CloseIcon } from '@/components';
-import { hideSideMenu } from '@/system/systemReducer';
-import { initialiseGame, moveToMenu, continueGame } from '@/game/gameReducerAtions';
-import { getLabelFontPaddingTop } from '@/utils';
+import { Label, Header, CloseIcon } from "@/components";
+import { hideSideMenu } from "@/system/systemReducer";
+import {
+  initialiseGame,
+  moveToMenu,
+  continueGame,
+} from "@/game/gameReducerActions";
+import { getLabelFontPaddingTop } from "@/utils";
 
 const styles = StyleSheet.create({
-  app: { position: 'absolute', left: 0, bottom: 0, right: 0, top: 0 },
-  menuWrapper: { position: 'absolute', left: 0, bottom: 0, right: 0, top: 0, flexDirection: 'row' },
+  app: { position: "absolute", left: 0, bottom: 0, right: 0, top: 0 },
+  menuWrapper: {
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    right: 0,
+    top: 0,
+    flexDirection: "row",
+  },
   menu: {
-    height: '100%',
+    height: "100%",
     backgroundColor: tokens.color.primary,
     borderRightWidth: 1,
     borderRightColor: tokens.pallet.grey,
@@ -36,11 +47,11 @@ const styles = StyleSheet.create({
   menuItem: {
     paddingTop: getLabelFontPaddingTop(Platform.OS),
     height: 55,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    alignItems: "flex-start",
+    justifyContent: "center",
   },
   menuItemBorder: {
-    width: '100%',
+    width: "100%",
     borderBottomWidth: 1,
     borderBottomColor: tokens.pallet.grey,
   },
@@ -58,7 +69,7 @@ const MenuItem = ({ children, onPress }) => (
 );
 
 const SideMenu = ({ dispatch, showSideMenu, children }) => {
-  const { width } = Dimensions.get('window');
+  const { width } = Dimensions.get("window");
   const menuPosition = useRef(new Animated.Value(-width)).current;
   const overlayOpacity = useRef(new Animated.Value(0)).current;
   useEffect(() => {
@@ -89,7 +100,9 @@ const SideMenu = ({ dispatch, showSideMenu, children }) => {
       >
         <View style={styles.menu}>
           <SafeAreaView>
-            <Header right={<CloseIcon onPress={() => hideSideMenu(dispatch)} />} />
+            <Header
+              right={<CloseIcon onPress={() => hideSideMenu(dispatch)} />}
+            />
             <MenuItemBorder />
             <MenuItem
               onPress={() => {
@@ -126,14 +139,16 @@ const SideMenu = ({ dispatch, showSideMenu, children }) => {
           </SafeAreaView>
         </View>
         <TouchableWithoutFeedback onPress={() => hideSideMenu(dispatch)}>
-          <Animated.View style={[styles.screenOverlay, { opacity: overlayOpacity }]} />
+          <Animated.View
+            style={[styles.screenOverlay, { opacity: overlayOpacity }]}
+          />
         </TouchableWithoutFeedback>
       </Animated.View>
     </>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   showSideMenu: state.system.showSideMenu,
 });
 

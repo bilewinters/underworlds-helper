@@ -1,17 +1,18 @@
-const initialiseGameType = 'INITIALISE_GAME';
-const flipActivationType = 'FLIP_ACTIVATION';
-const addGloryType = 'ADD_GLORY';
-const removeGloryType = 'REMOVE_GLORY';
-const flipGloryType = 'FLIP_GLORY';
-const nextRoundUpdateType = 'NEXT_ROUND_UPDATE';
-const nextRoundMoveType = 'NEXT_ROUND_MOVE';
-const previousRoundUpdateType = 'PREVIOUS_ROUND_UPDATE';
-const previousRoundMoveType = 'PREVIOUS_ROUND_MOVE';
-const moveToSummaryType = 'MOVE_TO_SUMMARY';
-const moveBackToGameType = 'MOVE_BACK_TO_GAME';
-const completeGameType = 'COMPLETE_GAME';
-const moveToMenuType = 'MOVE_TO_MENU';
-const moveToGameType = 'MOVE_TO_GAME';
+const initialiseGameType = "INITIALISE_GAME";
+const flipActivationType = "FLIP_ACTIVATION";
+const addGloryType = "ADD_GLORY";
+const removeGloryType = "REMOVE_GLORY";
+const flipGloryType = "FLIP_GLORY";
+const nextRoundUpdateType = "NEXT_ROUND_UPDATE";
+const nextRoundMoveType = "NEXT_ROUND_MOVE";
+const previousRoundUpdateType = "PREVIOUS_ROUND_UPDATE";
+const previousRoundMoveType = "PREVIOUS_ROUND_MOVE";
+const moveToSummaryType = "MOVE_TO_SUMMARY";
+const moveBackToGameType = "MOVE_BACK_TO_GAME";
+const completeGameType = "COMPLETE_GAME";
+const moveToMenuType = "MOVE_TO_MENU";
+const moveToGameType = "MOVE_TO_GAME";
+const vsFlipType = "VS_FLIP_GAME";
 
 export const actionTypes = {
   initialiseGameType,
@@ -28,6 +29,7 @@ export const actionTypes = {
   completeGameType,
   moveToMenuType,
   moveToGameType,
+  vsFlipType,
 };
 
 export const initialiseGame = (numberOfPlayers, dispatch) => {
@@ -41,7 +43,7 @@ export const initialiseGame = (numberOfPlayers, dispatch) => {
   dispatch({ type: moveToGameType });
 };
 
-export const initialiseMortisGame = dispatch => {
+export const initialiseMortisGame = (dispatch) => {
   const now = new Date().getTime();
   dispatch({
     type: initialiseGameType,
@@ -53,8 +55,12 @@ export const initialiseMortisGame = dispatch => {
   dispatch({ type: moveToGameType });
 };
 
-export const continueGame = dispatch => {
+export const continueGame = (dispatch) => {
   dispatch({ type: moveToGameType });
+};
+
+export const vsFlip = (dispatch) => {
+  dispatch({ type: vsFlipType });
 };
 
 export const flipActivation = (playerIndex, activationIndex, dispatch) =>
@@ -84,7 +90,7 @@ export const flipGlory = (playerIndex, gloryIndex, dispatch) =>
     gloryIndex,
   });
 
-export const nextRound = dispatch => {
+export const nextRound = (dispatch) => {
   dispatch({
     type: nextRoundUpdateType,
   });
@@ -93,7 +99,7 @@ export const nextRound = dispatch => {
   });
 };
 
-export const previousRound = dispatch => {
+export const previousRound = (dispatch) => {
   dispatch({
     type: previousRoundUpdateType,
   });
@@ -102,17 +108,17 @@ export const previousRound = dispatch => {
   });
 };
 
-export const moveToSummary = dispatch => {
+export const moveToSummary = (dispatch) => {
   dispatch({
     type: moveToSummaryType,
   });
 };
 
-export const moveBackToGame = dispatch => {
+export const moveBackToGame = (dispatch) => {
   dispatch({ type: moveBackToGameType });
 };
 
-export const completeGame = dispatch => {
+export const completeGame = (dispatch) => {
   dispatch({
     type: completeGameType,
   });
@@ -121,7 +127,7 @@ export const completeGame = dispatch => {
   });
 };
 
-export const moveToMenu = dispatch => {
+export const moveToMenu = (dispatch) => {
   dispatch({
     type: moveToMenuType,
   });

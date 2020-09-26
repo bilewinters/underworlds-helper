@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigationState } from '@react-navigation/native';
 
 import { BackgroundGlass, SubHeading, Header, BurgerIcon } from '@/components';
-import { initialiseGame, initialiseMortisGame, continueGame } from '@/game/gameReducerActions';
+import { initialiseGame, continueGame } from '@/game/gameReducerActions';
+import { showSideMenu } from '@/system/systemReducer';
 
 const styles = StyleSheet.create({
   screenContainer: {

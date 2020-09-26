@@ -1,11 +1,13 @@
-import { deepClone } from '@/utils';
-import { naviagationService } from '../navigationService';
-import { actionTypes } from './gameReducerActions';
+import { deepClone } from "@/utils";
+import { naviagationService } from "../navigationService";
+import { actionTypes } from "./gameReducerActions";
 
 const getPlayerState = (state, playerIndex) =>
-  state.games[state.currentGameId].gameState.players.find(player => player.playerIndex === playerIndex);
+  state.games[state.currentGameId].gameState.players.find(
+    (player) => player.playerIndex === playerIndex
+  );
 
-const initialisePlayer = playerIndex => ({
+const initialisePlayer = (playerIndex) => ({
   playerIndex,
   activations: new Array(12).fill(false),
   glory: [],
@@ -19,7 +21,9 @@ const newGame = (id, startDateTime, numberOfPlayers) => ({
     round: 1,
     complete: false,
     vs: false,
-    players: new Array(numberOfPlayers).fill(undefined).map((_, playerIndex) => initialisePlayer(playerIndex)),
+    players: new Array(numberOfPlayers)
+      .fill(undefined)
+      .map((_, playerIndex) => initialisePlayer(playerIndex)),
   },
   history: [],
 });
@@ -36,13 +40,16 @@ const reducer = (state = { games: {} }, action) => {
       };
     }
     case actionTypes.moveToGameType: {
-      naviagationService.navigateTo(`round${state.games[state.currentGameId].gameState.round}`);
+      naviagationService.navigateTo(
+        `round${state.games[state.currentGameId].gameState.round}`
+      );
       return state;
     }
     case actionTypes.flipActivationType: {
       const newState = deepClone(state);
       const playerState = getPlayerState(newState, action.playerIndex);
-      playerState.activations[action.activationIndex] = !playerState.activations[action.activationIndex];
+      playerState.activations[action.activationIndex] = !playerState
+        .activations[action.activationIndex];
       return newState;
     }
     case actionTypes.addGloryType: {
@@ -60,7 +67,9 @@ const reducer = (state = { games: {} }, action) => {
     case actionTypes.flipGloryType: {
       const newState = deepClone(state);
       const playerState = getPlayerState(newState, action.playerIndex);
-      playerState.glory[action.gloryIndex] = !playerState.glory[action.gloryIndex];
+      playerState.glory[action.gloryIndex] = !playerState.glory[
+        action.gloryIndex
+      ];
       return newState;
     }
     case actionTypes.nextRoundUpdateType: {
@@ -69,13 +78,16 @@ const reducer = (state = { games: {} }, action) => {
       return newState;
     }
     case actionTypes.nextRoundMoveType: {
-      naviagationService.navigateTo(`round${state.games[state.currentGameId].gameState.round}`);
+      naviagationService.navigateTo(
+        `round${state.games[state.currentGameId].gameState.round}`
+      );
       return state;
     }
     case actionTypes.previousRoundUpdateType: {
       const newState = deepClone(state);
       const { round } = newState.games[newState.currentGameId].gameState;
-      newState.games[newState.currentGameId].gameState.round = round > 1 ? round - 1 : round;
+      newState.games[newState.currentGameId].gameState.round =
+        round > 1 ? round - 1 : round;
       return newState;
     }
     case actionTypes.previousRoundMoveType: {
@@ -83,7 +95,7 @@ const reducer = (state = { games: {} }, action) => {
       return state;
     }
     case actionTypes.moveToSummaryType: {
-      naviagationService.navigateTo('summary');
+      naviagationService.navigateTo("summary");
       return state;
     }
     case actionTypes.moveBackToGameType: {

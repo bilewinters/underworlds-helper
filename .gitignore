@@ -2,11 +2,12 @@ node_modules/**/*
 .expo/*
 npm-debug.*
 *.jks
+*.p8
 *.p12
 *.key
 *.mobileprovision
-.DS_Store
-*/.DS_Store
+*.orig.*
+web-build/
 
 buildOutput.txt
 buildStatus.txt
@@ -14,3 +15,4 @@ appium-log.txt
 uwhelper-simulator.tar.gz
 uwhelper-simulator.zip
 uwhelper.app
+.DS_Store

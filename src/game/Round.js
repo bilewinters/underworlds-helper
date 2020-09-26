@@ -1,22 +1,40 @@
 /* eslint-disable react-native/no-raw-text */
-import React from 'react';
-import { View, SafeAreaView, StyleSheet, BackHandler, Platform } from 'react-native';
-import { connect } from 'react-redux';
+import React from "react";
+import {
+  View,
+  SafeAreaView,
+  StyleSheet,
+  BackHandler,
+  Platform,
+} from "react-native";
+import { connect } from "react-redux";
 
-import { BackgroundPlain, Title, Header, Button, BurgerIcon, RotateIcon } from '@/components';
-import { nextRound, moveToSummary, moveToMenu, vsFlip } from './gameReducerActions';
-import { showSideMenu } from '@/system/systemReducer';
-import { activationsForRound } from './gameUtils';
-import { getTitleFontPaddingTop } from '@/utils';
-import Player from './Player';
+import {
+  BackgroundPlain,
+  Title,
+  Header,
+  Button,
+  BurgerIcon,
+  RotateIcon,
+} from "@/components";
+import {
+  nextRound,
+  moveToSummary,
+  moveToMenu,
+  vsFlip,
+} from "./gameReducerActions";
+import { showSideMenu } from "@/system/systemReducer";
+import { activationsForRound } from "./gameUtils";
+import { getTitleFontPaddingTop } from "@/utils";
+import Player from "./Player";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   roundTextWrap: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   roundText: {
     paddingTop: getTitleFontPaddingTop(Platform.OS),
@@ -24,12 +42,14 @@ const styles = StyleSheet.create({
 });
 
 const allRoundActivationsUsed = (players, round) =>
-  players.every(({ activations }) => activationsForRound(activations, round).every(used => used === true));
+  players.every(({ activations }) =>
+    activationsForRound(activations, round).every((used) => used === true)
+  );
 
 class Round extends React.Component {
   componentDidMount() {
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      if (Actions.currentScene.startsWith('round')) {
+    this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+      if (Actions.currentScene.startsWith("round")) {
         const { dispatch } = this.props;
         moveToMenu(dispatch);
         return true;
@@ -54,7 +74,9 @@ class Round extends React.Component {
               <Button.Small
                 testID="end-of-round-button"
                 text="End Round"
-                onPress={() => (round < 3 ? nextRound(dispatch) : moveToSummary(dispatch))}
+                onPress={() =>
+                  round < 3 ? nextRound(dispatch) : moveToSummary(dispatch)
+                }
               />
             );
           }
@@ -66,7 +88,7 @@ class Round extends React.Component {
       >
         <View style={styles.roundTextWrap}>
           <Title style={styles.roundText} testID="round-label">
-            {`${!vs ? 'Round ' : ''}${round}`}
+            {`${!vs ? "Round " : ""}${round}`}
           </Title>
         </View>
       </Header>
@@ -76,7 +98,10 @@ class Round extends React.Component {
   renderPlayer = ({ player, round, multiPlayer, rotated }) => (
     <Player
       {...player}
-      style={player.playerIndex === 0 && rotated && { transform: [{ rotate: '180deg' }] }}
+      style={
+        player.playerIndex === 0 &&
+        rotated && { transform: [{ rotate: "180deg" }] }
+      }
       round={round}
       key={`${player.playerIndex}`}
       multiPlayer={multiPlayer}
@@ -93,16 +118,27 @@ class Round extends React.Component {
       <BackgroundPlain>
         {!vs && this.renderHeader()}
         <SafeAreaView style={styles.container}>
-          {this.renderPlayer({ player: player1, round, multiPlayer, rotated: vs })}
+          {this.renderPlayer({
+            player: player1,
+            round,
+            multiPlayer,
+            rotated: vs,
+          })}
           {vs && this.renderHeader()}
-          {player2 && this.renderPlayer({ player: player2, round, multiPlayer, rotated: false })}
+          {player2 &&
+            this.renderPlayer({
+              player: player2,
+              round,
+              multiPlayer,
+              rotated: false,
+            })}
         </SafeAreaView>
       </BackgroundPlain>
     );
   }
 }
 
-const mapStateToProps = round => state => ({
+const mapStateToProps = (round) => (state) => ({
   ...state.game.games[state.game.currentGameId].gameState,
   round,
 });

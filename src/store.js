@@ -1,10 +1,10 @@
-import { AsyncStorage } from 'react-native';
-import { applyMiddleware, createStore, compose } from 'redux';
-import thunk from 'redux-thunk';
+import { AsyncStorage } from "react-native";
+import { applyMiddleware, createStore, compose } from "redux";
+import thunk from "redux-thunk";
 
-import rootReducer from '@/rootReducer';
+import rootReducer from "@/rootReducer";
 
-const STATE_KEY = 'UWH_STORE';
+const STATE_KEY = "UWH_STORE";
 
 let store;
 
@@ -24,7 +24,11 @@ export const initialiseStore = async () => {
   } catch (error) {
     console.warn(error);
   }
-  store = createStore(persistingReducer, storedState, compose(applyMiddleware(thunk)));
+  store = createStore(
+    persistingReducer,
+    storedState,
+    compose(applyMiddleware(thunk))
+  );
 };
 
 export const getStore = () => store;
