@@ -4,7 +4,7 @@
     "description": "Underworlds Helper - helper for Underworlds gaming",
     "slug": "uwhelper",
     "privacy": "unlisted",
-    "version": "2.0.1",
+    "version": "2.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -22,9 +22,7 @@
       "bundleIdentifier": "com.wordsspeaklouder.uwhelper",
       "buildNumber": "1",
       "icon": "./assets/images/bg/iconIos.png",
-      "config": {
-        "usesNonExemptEncryption": false
-      }
+      "config": { "usesNonExemptEncryption": false }
     },
     "android": {
       "package": "com.wordsspeaklouder.uwhelper",
@@ -36,8 +34,6 @@
       },
       "permissions": []
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+    "web": { "favicon": "./assets/favicon.png" }
   }
 }
