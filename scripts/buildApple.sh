@@ -22,7 +22,7 @@ echo "----------------------------------------"
 echo "------- Starting App (IPA) build -------"
 echo "----------------------------------------"
 echo ""
-node_modules/expo-cli/bin/expo.js build:ios --release-channel prod --no-publish --no-wait >buildOutput.txt 2>&1
+node_modules/expo-cli/bin/expo.js build:ios --type archive --release-channel prod --apple-id $APPLE_USER --skip-credentials-check --no-publish --no-wait >buildOutput.txt 2>&1
 cat buildOutput.txt
 
 timeout=60
