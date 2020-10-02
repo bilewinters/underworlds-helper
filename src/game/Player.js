@@ -1,12 +1,18 @@
 /* eslint-disable react-native/no-raw-text */
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { connect } from 'react-redux';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 
-import { flipActivation, addGlory, removeGlory, flipGlory } from './gameReducerActions';
-import Activations from './Activations';
-import Glory from './Glory';
-import { sizes } from '@/constants';
+import {
+  flipActivation,
+  addGlory,
+  removeGlory,
+  flipGlory,
+} from "./gameReducerActions";
+import Activations from "./Activations";
+import Glory from "./Glory";
+import { sizes } from "@/constants";
+import { activationsForRound } from "./gameUtils";
 
 const styles = StyleSheet.create({
   container: {
@@ -14,13 +20,23 @@ const styles = StyleSheet.create({
   },
 });
 
-const Player = ({ playerIndex, activations, glory, round, multiPlayer, style, dispatch }) => (
+const Player = ({
+  playerIndex,
+  activations,
+  glory,
+  round,
+  multiPlayer,
+  style,
+  dispatch,
+}) => (
   <View style={[styles.container, style]}>
     <Activations
-      activations={activations}
+      activations={activationsForRound(activations, round)}
       playerIndex={playerIndex}
       round={round}
-      onPress={activationIndex => flipActivation(playerIndex, activationIndex, dispatch)}
+      onPress={(activationIndex) =>
+        flipActivation(playerIndex, activationIndex, dispatch)
+      }
       size={multiPlayer ? sizes.small : sizes.large}
     />
     <Glory
@@ -28,7 +44,7 @@ const Player = ({ playerIndex, activations, glory, round, multiPlayer, style, di
       playerIndex={playerIndex}
       onAddGlory={() => addGlory(playerIndex, dispatch)}
       onRemoveGlory={() => removeGlory(playerIndex, dispatch)}
-      onFlipGlory={gloryIndex => flipGlory(playerIndex, gloryIndex, dispatch)}
+      onFlipGlory={(gloryIndex) => flipGlory(playerIndex, gloryIndex, dispatch)}
       size={multiPlayer ? sizes.small : sizes.large}
     />
   </View>

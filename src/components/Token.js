@@ -1,15 +1,15 @@
-import React from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
-import designTokens from '@design/tokens';
+import React from "react";
+import { View, TouchableOpacity, Image } from "react-native";
+import designTokens from "@design/tokens";
 
-const activationImage = require('@assets/images/tokens/activation.png');
-const activationUsedImage = require('@assets/images/tokens/activation-used.png');
-const gloryImage = require('@assets/images/tokens/glory.png');
-const gloryUsedImage = require('@assets/images/tokens/glory-used.png');
+const activationImage = require("@assets/images/tokens/activation.png");
+const activationUsedImage = require("@assets/images/tokens/activation-used.png");
+const gloryImage = require("@assets/images/tokens/glory.png");
+const gloryUsedImage = require("@assets/images/tokens/glory-used.png");
 
 const tokenBase = {
-  alignItems: 'center',
-  justifyContent: 'center',
+  alignItems: "center",
+  justifyContent: "center",
 };
 export const largeToken = {
   ...tokenBase,
@@ -53,7 +53,14 @@ const Token = ({ id, style, onPress, children, testID }) => (
   </TouchableOpacity>
 );
 
-const ActivationToken = ({ activationIndex, used, onPress, large, testID }) => (
+const ActivationToken = ({
+  activationIndex,
+  used,
+  onPress,
+  large,
+  style,
+  testID,
+}) => (
   <Token
     onPress={onPress}
     id={activationIndex}
@@ -61,6 +68,7 @@ const ActivationToken = ({ activationIndex, used, onPress, large, testID }) => (
     style={{
       ...(used ? styles.activationUsed : styles.activation),
       ...(large ? styles.largeToken : styles.smallToken),
+      ...(style || {}),
     }}
   >
     <Image
@@ -90,13 +98,13 @@ const GloryToken = ({ gloryIndex, used, onPress, large, testID }) => (
 );
 
 const AT = {
-  Large: props => <ActivationToken {...props} large />,
-  Small: props => <ActivationToken {...props} />,
+  Large: (props) => <ActivationToken {...props} large />,
+  Small: (props) => <ActivationToken {...props} />,
 };
 
 const GT = {
-  Large: props => <GloryToken {...props} large />,
-  Small: props => <GloryToken {...props} />,
+  Large: (props) => <GloryToken {...props} large />,
+  Small: (props) => <GloryToken {...props} />,
 };
 
 export { AT as ActivationToken, GT as GloryToken };

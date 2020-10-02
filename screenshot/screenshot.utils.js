@@ -2,6 +2,11 @@
 /* eslint-disable no-plusplus */
 import sharp from "sharp";
 
+export const iPhone11ProMaxDimensions = {
+  width: 1242,
+  height: 2688,
+};
+
 export const getElement = async (client, selector, timeout = 10000) => {
   let timeoutCount = timeout / 1000;
   let element = await client.$(selector);

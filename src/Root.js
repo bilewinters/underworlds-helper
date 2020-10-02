@@ -13,6 +13,7 @@ import Splash from "@/splash/Splash";
 import Menu from "@/menu/Menu";
 import { Round1, Round2, Round3 } from "@/game/Round";
 import Summary from "@/game/Summary";
+import MortisGame from "@/game/MortisGame";
 import { initialiseStore, getStore } from "@/store";
 
 const Stack = createStackNavigator();
@@ -49,6 +50,7 @@ export default function Root() {
               <Stack.Screen name="round2" component={Round2} />
               <Stack.Screen name="round3" component={Round3} />
               <Stack.Screen name="summary" component={Summary} />
+              <Stack.Screen name="mortis" component={MortisGame} />
             </Stack.Navigator>
           </NavigationContainer>
         </SideMenu>

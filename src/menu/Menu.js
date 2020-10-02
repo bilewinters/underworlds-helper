@@ -1,12 +1,22 @@
 /* eslint-disable react-native/no-raw-text */
-import React, { useEffect } from 'react';
-import { BackHandler, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigationState } from '@react-navigation/native';
+import React, { useEffect } from "react";
+import {
+  BackHandler,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigationState } from "@react-navigation/native";
 
-import { BackgroundGlass, SubHeading, Header, BurgerIcon } from '@/components';
-import { initialiseGame, continueGame } from '@/game/gameReducerActions';
-import { showSideMenu } from '@/system/systemReducer';
+import { BackgroundGlass, SubHeading, Header, BurgerIcon } from "@/components";
+import {
+  initialiseGame,
+  initialiseMortisGame,
+  continueGame,
+} from "@/game/gameReducerActions";
+import { showSideMenu } from "@/system/systemReducer";
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -14,19 +24,21 @@ const styles = StyleSheet.create({
   },
   menuContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
 export default function Menu() {
-  const currentGameId = useSelector(state => state.game.currentGameId);
+  const currentGameId = useSelector((state) => state.game.currentGameId);
   const dispatch = useDispatch();
-  const currentRouteName = useNavigationState(({ index, routes }) => routes[index].name);
+  const currentRouteName = useNavigationState(
+    ({ index, routes }) => routes[index].name
+  );
 
   useEffect(() => {
-    const { remove } = BackHandler.addEventListener('hardwareBackPress', () => {
-      if (currentRouteName === 'menu') {
+    const { remove } = BackHandler.addEventListener("hardwareBackPress", () => {
+      if (currentRouteName === "menu") {
         BackHandler.exitApp();
         return true;
       }
@@ -45,6 +57,9 @@ export default function Menu() {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => initialiseGame(2, dispatch)}>
             <SubHeading testID="menu-2-player-button">2 Players</SubHeading>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => initialiseMortisGame(dispatch)}>
+            <SubHeading testID="menu-mortis-button">Arena Mortis</SubHeading>
           </TouchableOpacity>
           {currentGameId && (
             <TouchableOpacity onPress={() => continueGame(dispatch)}>

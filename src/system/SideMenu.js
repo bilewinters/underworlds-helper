@@ -17,6 +17,7 @@ import { Label, Header, CloseIcon } from "@/components";
 import { hideSideMenu } from "@/system/systemReducer";
 import {
   initialiseGame,
+  initialiseMortisGame,
   moveToMenu,
   continueGame,
 } from "@/game/gameReducerActions";
@@ -127,6 +128,14 @@ const SideMenu = ({ dispatch, showSideMenu, children }) => {
               }}
             >
               <Label>New 2 Player Game</Label>
+            </MenuItem>
+            <MenuItem
+              onPress={() => {
+                initialiseMortisGame(dispatch);
+                hideSideMenu(dispatch);
+              }}
+            >
+              <Label>New Arena Mortis Game</Label>
             </MenuItem>
             <MenuItem
               onPress={() => {

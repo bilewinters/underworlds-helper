@@ -13,10 +13,11 @@ const initialisePlayer = (playerIndex) => ({
   glory: [],
 });
 
-const newGame = (id, startDateTime, numberOfPlayers) => ({
+const newGame = (id, startDateTime, numberOfPlayers, isArenaMortis) => ({
   id,
   startDateTime,
   numberOfPlayers,
+  isArenaMortis,
   gameState: {
     round: 1,
     complete: false,
@@ -32,17 +33,24 @@ const reducer = (state = { games: {} }, action) => {
   const { games } = state;
   switch (action.type) {
     case actionTypes.initialiseGameType: {
-      const { id, startDateTime, numberOfPlayers } = action;
+      const { id, startDateTime, numberOfPlayers, isArenaMortis } = action;
       return {
         ...state,
         currentGameId: id,
-        games: { ...games, [id]: newGame(id, startDateTime, numberOfPlayers) },
+        games: {
+          ...games,
+          [id]: newGame(id, startDateTime, numberOfPlayers, isArenaMortis),
+        },
       };
     }
     case actionTypes.moveToGameType: {
-      naviagationService.navigateTo(
-        `round${state.games[state.currentGameId].gameState.round}`
-      );
+      if (state.games[state.currentGameId].isArenaMortis) {
+        naviagationService.navigateTo(`mortis`);
+      } else {
+        naviagationService.navigateTo(
+          `round${state.games[state.currentGameId].gameState.round}`
+        );
+      }
       return state;
     }
     case actionTypes.flipActivationType: {
