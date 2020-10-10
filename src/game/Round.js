@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-raw-text */
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   SafeAreaView,
@@ -8,6 +8,7 @@ import {
   Platform,
 } from "react-native";
 import { connect } from "react-redux";
+import { useNavigationState } from "@react-navigation/native";
 
 import {
   BackgroundPlain,
@@ -46,97 +47,109 @@ const allRoundActivationsUsed = (players, round) =>
     activationsForRound(activations, round).every((used) => used === true)
   );
 
-class Round extends React.Component {
-  componentDidMount() {
-    this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
-      if (Actions.currentScene.startsWith("round")) {
-        const { dispatch } = this.props;
-        moveToMenu(dispatch);
-        return true;
-      }
-      return false;
-    });
-  }
+const RoundHeader = ({ round, players, vs, dispatch }) => {
+  const multiPlayer = players.length > 1;
+  return (
+    <Header
+      left={<BurgerIcon onPress={() => showSideMenu(dispatch)} />}
+      right={(() => {
+        if (allRoundActivationsUsed(players, round)) {
+          return (
+            <Button.Small
+              testID="end-of-round-button"
+              text="End Round"
+              onPress={() =>
+                round < 3 ? nextRound(dispatch) : moveToSummary(dispatch)
+              }
+            />
+          );
+        }
+        if (multiPlayer) {
+          return <RotateIcon onPress={() => vsFlip(dispatch)} />;
+        }
+        return undefined;
+      })()}
+    >
+      <View style={styles.roundTextWrap}>
+        <Title style={styles.roundText} testID="round-label">
+          {`${!vs ? "Round " : ""}${round}`}
+        </Title>
+      </View>
+    </Header>
+  );
+};
 
-  componentWillUnmount() {
-    this.backHandler.remove();
-  }
+const RoundPlayer = ({ player, round, multiPlayer, rotated }) => (
+  <Player
+    {...player}
+    style={
+      player.playerIndex === 0 &&
+      rotated && { transform: [{ rotate: "180deg" }] }
+    }
+    round={round}
+    key={`${player.playerIndex}`}
+    multiPlayer={multiPlayer}
+  />
+);
 
-  renderHeader() {
-    const { round, players, vs, dispatch } = this.props;
-    const multiPlayer = players.length > 1;
-    return (
-      <Header
-        left={<BurgerIcon onPress={() => showSideMenu(dispatch)} />}
-        right={(() => {
-          if (allRoundActivationsUsed(players, round)) {
-            return (
-              <Button.Small
-                testID="end-of-round-button"
-                text="End Round"
-                onPress={() =>
-                  round < 3 ? nextRound(dispatch) : moveToSummary(dispatch)
-                }
-              />
-            );
-          }
-          if (multiPlayer) {
-            return <RotateIcon onPress={() => vsFlip(dispatch)} />;
-          }
-          return undefined;
-        })()}
-      >
-        <View style={styles.roundTextWrap}>
-          <Title style={styles.roundText} testID="round-label">
-            {`${!vs ? "Round " : ""}${round}`}
-          </Title>
-        </View>
-      </Header>
-    );
-  }
+const Round = ({ round, players, vs, dispatch }) => {
+  const multiPlayer = players.length > 1;
+  const player1 = players[0];
+  const player2 = multiPlayer ? players[1] : undefined;
 
-  renderPlayer = ({ player, round, multiPlayer, rotated }) => (
-    <Player
-      {...player}
-      style={
-        player.playerIndex === 0 &&
-        rotated && { transform: [{ rotate: "180deg" }] }
-      }
-      round={round}
-      key={`${player.playerIndex}`}
-      multiPlayer={multiPlayer}
-    />
+  const currentRouteName = useNavigationState(
+    ({ index, routes }) => routes[index].name
   );
 
-  render() {
-    const { round, players, vs } = this.props;
-    const multiPlayer = players.length > 1;
-    const player1 = players[0];
-    const player2 = multiPlayer ? players[1] : undefined;
+  useEffect(
+    () =>
+      BackHandler.addEventListener("hardwareBackPress", () => {
+        if (currentRouteName.startsWith("round")) {
+          moveToMenu(dispatch);
+          return true;
+        }
+        return false;
+      }).remove,
+    [currentRouteName]
+  );
 
-    return (
-      <BackgroundPlain>
-        {!vs && this.renderHeader()}
-        <SafeAreaView style={styles.container}>
-          {this.renderPlayer({
-            player: player1,
-            round,
-            multiPlayer,
-            rotated: vs,
-          })}
-          {vs && this.renderHeader()}
-          {player2 &&
-            this.renderPlayer({
-              player: player2,
-              round,
-              multiPlayer,
-              rotated: false,
-            })}
-        </SafeAreaView>
-      </BackgroundPlain>
-    );
-  }
-}
+  return (
+    <BackgroundPlain>
+      {!vs && (
+        <RoundHeader
+          round={round}
+          players={players}
+          vs={vs}
+          dispatch={dispatch}
+        />
+      )}
+      <SafeAreaView style={styles.container}>
+        <RoundPlayer
+          player={player1}
+          round={round}
+          multiPlayer={multiPlayer}
+          rotated={vs}
+        />
+        {vs && (
+          <RoundHeader
+            round={round}
+            players={players}
+            vs={vs}
+            dispatch={dispatch}
+          />
+        )}
+        {player2 && (
+          <RoundPlayer
+            player={player2}
+            round={round}
+            multiPlayer={true}
+            rotated={false}
+          />
+        )}
+      </SafeAreaView>
+    </BackgroundPlain>
+  );
+};
 
 const mapStateToProps = (round) => (state) => ({
   ...state.game.games[state.game.currentGameId].gameState,

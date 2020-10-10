@@ -8,6 +8,7 @@ import {
   Platform,
 } from "react-native";
 import { connect } from "react-redux";
+import { useNavigationState } from "@react-navigation/native";
 
 import {
   BackgroundPlain,
@@ -53,21 +54,6 @@ class MortisGame extends React.Component {
   state = {};
 
   initiativeRef = React.createRef();
-
-  componentDidMount() {
-    this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
-      if (Actions.currentScene.startsWith("round")) {
-        const { dispatch } = this.props;
-        moveToMenu(dispatch);
-        return true;
-      }
-      return false;
-    });
-  }
-
-  componentWillUnmount() {
-    this.backHandler.remove();
-  }
 
   renderHeader() {
     const { dispatch } = this.props;
