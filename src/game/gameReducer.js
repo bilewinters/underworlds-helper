@@ -18,6 +18,7 @@ const newGame = (id, startDateTime, numberOfPlayers, isArenaMortis) => ({
   startDateTime,
   numberOfPlayers,
   isArenaMortis,
+  initiative: 6,
   gameState: {
     round: 1,
     complete: false,
@@ -52,6 +53,11 @@ const reducer = (state = { games: {} }, action) => {
         );
       }
       return state;
+    }
+    case actionTypes.setInitiativeType: {
+      const newState = deepClone(state);
+      newState.games[state.currentGameId].initiative = action.initiative;
+      return newState;
     }
     case actionTypes.flipActivationType: {
       const newState = deepClone(state);

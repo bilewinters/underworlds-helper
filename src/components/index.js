@@ -1,10 +1,11 @@
-import { BackgroundPlain, BackgroundGlass } from './Background';
-import { Heading, SubHeading, MinorHeading, Title, Label } from './Text';
-import Logo from './Logo';
-import { ActivationToken, GloryToken, largeToken, smallToken } from './Token';
-import Header from './Header';
-import Button from './Button';
-import { BurgerIcon, CloseIcon, RotateIcon } from './Icons';
+import { BackgroundPlain, BackgroundGlass } from "./Background";
+import { Heading, SubHeading, MinorHeading, Title, Label } from "./Text";
+import Logo from "./Logo";
+import { ActivationToken, GloryToken, largeToken, smallToken } from "./Token";
+import Header from "./Header";
+import Button from "./Button";
+import Initiative from "./Initiative";
+import { BurgerIcon, CloseIcon, RotateIcon } from "./Icons";
 
 export {
   BackgroundPlain,
@@ -24,4 +25,5 @@ export {
   BurgerIcon,
   CloseIcon,
   RotateIcon,
+  Initiative,
 };

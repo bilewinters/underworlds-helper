@@ -15,6 +15,7 @@ import {
   Header,
   Button,
   BurgerIcon,
+  Initiative,
 } from "@/components";
 import {
   moveToSummary,
@@ -23,9 +24,11 @@ import {
   addGlory,
   removeGlory,
   flipGlory,
+  setInitiative,
 } from "./gameReducerActions";
 import { showSideMenu } from "@/system/systemReducer";
 import { getTitleFontPaddingTop } from "@/utils";
+import { InitiativeToken } from "@/components/Token";
 import { sizes } from "@/constants";
 import Activations from "./Activations";
 import Glory from "./Glory";
@@ -44,6 +47,10 @@ const styles = StyleSheet.create({
 });
 
 class MortisGame extends React.Component {
+  state = {};
+
+  initiativeRef = React.createRef();
+
   componentDidMount() {
     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       if (Actions.currentScene.startsWith("round")) {
@@ -82,7 +89,7 @@ class MortisGame extends React.Component {
   }
 
   render() {
-    const { players, dispatch } = this.props;
+    const { players, initiative, dispatch } = this.props;
     const { activations, glory } = players[0];
     return (
       <BackgroundPlain>
@@ -99,6 +106,41 @@ class MortisGame extends React.Component {
               size={sizes.large}
               tokenStyle={{ marginBottom: 8 }}
             />
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+            >
+              <Title>Initiative</Title>
+              <View style={{ width: 8 }} />
+              <View ref={this.initiativeRef} onLayout={() => {}}>
+                <InitiativeToken
+                  value={initiative}
+                  selected={false}
+                  disabled={false}
+                  onPress={() => {
+                    if (!this.state.initiativePosition) {
+                      this.initiativeRef.current.measure(
+                        (x, y, w, h, pX, pY) => {
+                          this.setState({
+                            initiativeOpen: true,
+                            initiativePosition: { x: pX, y: pY },
+                          });
+                        }
+                      );
+                    }
+                  }}
+                >
+                  <Title
+                    style={{ bottom: Platform.OS === "ios" ? -2 : undefined }}
+                  >
+                    {initiative}
+                  </Title>
+                </InitiativeToken>
+              </View>
+            </View>
             <Glory
               glory={glory}
               playerIndex={0}
@@ -109,13 +151,26 @@ class MortisGame extends React.Component {
             />
           </View>
         </SafeAreaView>
+        {this.state.initiativePosition ? (
+          <Initiative
+            startOpen
+            position={this.state.initiativePosition}
+            initiative={initiative}
+            onInitiativeSelect={(newInitiative) => {
+              setInitiative(newInitiative, dispatch);
+            }}
+          />
+        ) : null}
       </BackgroundPlain>
     );
   }
 }
 
-const mapStateToProps = () => (state) => ({
-  ...state.game.games[state.game.currentGameId].gameState,
-});
+const mapStateToProps = () => (state) => {
+  return {
+    ...state.game.games[state.game.currentGameId].gameState,
+    initiative: state.game.games[state.game.currentGameId].initiative,
+  };
+};
 
 export default connect(mapStateToProps())(MortisGame);

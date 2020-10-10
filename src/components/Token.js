@@ -43,10 +43,27 @@ const styles = {
     marginLeft: 16,
     marginBottom: 16,
   },
+  initiative: {
+    alignItems: "center",
+    justifyContent: "center",
+    ...largeToken,
+  },
 };
 
-const Token = ({ id, style, onPress, children, testID }) => (
-  <TouchableOpacity onPress={() => onPress(id)}>
+const Token = ({
+  id,
+  style,
+  onPress,
+  disabled,
+  children,
+  testID,
+  activeOpacity = 0.2,
+}) => (
+  <TouchableOpacity
+    disabled={disabled}
+    onPress={() => onPress(id)}
+    activeOpacity={activeOpacity}
+  >
     <View style={style} testID={testID} accessible accessibilityLabel={testID}>
       {children}
     </View>
@@ -97,6 +114,35 @@ const GloryToken = ({ gloryIndex, used, onPress, large, testID }) => (
   </Token>
 );
 
+const InitiativeToken = ({
+  children,
+  value,
+  selected,
+  disabled,
+  style,
+  onPress,
+}) => (
+  <Token
+    activeOpacity={1}
+    zIndex={selected ? 2 : 1}
+    disabled={disabled}
+    onPress={onPress}
+    id={value}
+    testID={`initiative-token-${value}`}
+    style={{
+      ...styles.initiative,
+      ...(style || {}),
+    }}
+  >
+    <Image
+      source={activationUsedImage}
+      style={{ ...styles.largeToken, position: "absolute" }}
+      resizeMode="contain"
+    />
+    {children}
+  </Token>
+);
+
 const AT = {
   Large: (props) => <ActivationToken {...props} large />,
   Small: (props) => <ActivationToken {...props} />,
@@ -107,4 +153,4 @@ const GT = {
   Small: (props) => <GloryToken {...props} />,
 };
 
-export { AT as ActivationToken, GT as GloryToken };
+export { AT as ActivationToken, GT as GloryToken, InitiativeToken };

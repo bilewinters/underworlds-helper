@@ -12,6 +12,7 @@ const moveBackToGameType = "MOVE_BACK_TO_GAME";
 const completeGameType = "COMPLETE_GAME";
 const moveToMenuType = "MOVE_TO_MENU";
 const moveToGameType = "MOVE_TO_GAME";
+const setInitiativeType = "SET_INITIATIVE";
 const vsFlipType = "VS_FLIP_GAME";
 
 export const actionTypes = {
@@ -29,6 +30,7 @@ export const actionTypes = {
   completeGameType,
   moveToMenuType,
   moveToGameType,
+  setInitiativeType,
   vsFlipType,
 };
 
@@ -57,6 +59,10 @@ export const initialiseMortisGame = (dispatch) => {
 
 export const continueGame = (dispatch) => {
   dispatch({ type: moveToGameType });
+};
+
+export const setInitiative = (initiative, dispatch) => {
+  dispatch({ type: setInitiativeType, initiative });
 };
 
 export const vsFlip = (dispatch) => {

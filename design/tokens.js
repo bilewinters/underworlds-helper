@@ -1,15 +1,17 @@
 const pallet = {
-  black: '#000000',
-  blue: '#87CEEB',
-  gold: '#FFD700',
-  green: '#008000',
-  grey: '#808080',
-  white: '#FFFFFF',
-  brown: '#883b0d',
+  black: "#000000",
+  blue: "#87CEEB",
+  gold: "#FFD700",
+  green: "#008000",
+  grey: "#808080",
+  white: "#FFFFFF",
+  brown: "#883b0d",
 };
 
 const color = {
   primary: pallet.brown,
+  secondary: pallet.black,
+  border: pallet.white,
 };
 
 const button = {
@@ -21,7 +23,7 @@ const button = {
 
 const text = {
   primaryColor: pallet.white,
-  font: 'sava-pro-semibold',
+  font: "sava-pro-semibold",
   headingSize: 56,
   subHeadingSize: 48,
   minorHeadingSize: 36,
