@@ -14,23 +14,23 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     alignItems: "center",
   },
-  activationsLarge: {
-    marginTop: 4,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: largeControlWidth,
-    flexWrap: "wrap",
-  },
-  activationsSmall: {
-    marginTop: 4,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: smallControlWidth,
-    flexWrap: "wrap",
-  },
+});
+
+const getActivationControlWidth = (size, activationsPerRow) =>
+  (size === sizes.large ? largeToken.width : smallToken.width) *
+    activationsPerRow +
+  tokenPadding * (activationsPerRow - 1);
+
+const getActivateionControlStyle = (size, activationsPerRow) => ({
+  marginTop: 4,
+  flexDirection: "row",
+  justifyContent: "space-between",
+  width: getActivationControlWidth(size, activationsPerRow),
+  flexWrap: "wrap",
 });
 
 const Activations = ({
+  activationsPerRow = 4,
   activations,
   round,
   onPress,
@@ -40,11 +40,7 @@ const Activations = ({
 }) => (
   <View style={styles.activationsContainer}>
     <Label>Activations</Label>
-    <View
-      style={
-        size === sizes.large ? styles.activationsLarge : styles.activationsSmall
-      }
-    >
+    <View style={getActivateionControlStyle(size, activationsPerRow)}>
       {activations.map((used, i) => {
         const activationIndex = i + (round - 1) * 4;
         const Token =

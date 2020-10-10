@@ -32,10 +32,13 @@ import { InitiativeToken } from "@/components/Token";
 import { sizes } from "@/constants";
 import Activations from "./Activations";
 import Glory from "./Glory";
+import { largeToken } from "../components/Token";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   roundTextWrap: {
     flexDirection: "row",
@@ -95,8 +98,9 @@ class MortisGame extends React.Component {
       <BackgroundPlain>
         {this.renderHeader()}
         <SafeAreaView style={styles.container}>
-          <View style={[styles.container]}>
+          <View style={styles.container}>
             <Activations
+              activationsPerRow={3}
               activations={activations}
               playerIndex={0}
               round={1}

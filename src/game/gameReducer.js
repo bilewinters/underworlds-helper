@@ -7,9 +7,9 @@ const getPlayerState = (state, playerIndex) =>
     (player) => player.playerIndex === playerIndex
   );
 
-const initialisePlayer = (playerIndex) => ({
+const initialisePlayer = (playerIndex, isArenaMortis) => ({
   playerIndex,
-  activations: new Array(12).fill(false),
+  activations: new Array(isArenaMortis ? 9 : 12).fill(false),
   glory: [],
 });
 
@@ -25,7 +25,7 @@ const newGame = (id, startDateTime, numberOfPlayers, isArenaMortis) => ({
     vs: false,
     players: new Array(numberOfPlayers)
       .fill(undefined)
-      .map((_, playerIndex) => initialisePlayer(playerIndex)),
+      .map((_, playerIndex) => initialisePlayer(playerIndex, isArenaMortis)),
   },
   history: [],
 });
