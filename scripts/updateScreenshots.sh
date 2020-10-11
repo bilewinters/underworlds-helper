@@ -62,7 +62,7 @@ appLocation="${appLocation}/uwhelper.app"
 echo "----------------------------------------"
 echo "------------- Start Appium -------------"
 echo "----------------------------------------"
-npx appium >appium-log.txt 2>&1
+npx appium &>! appium.log &
 appiumPID=$!
 echo "Give everything a moment to start..."
 sleep 10
