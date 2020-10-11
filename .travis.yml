@@ -13,6 +13,8 @@ stages:
     if: branch = deploy
   - name: build
     if: branch = deploy
+  - name: screenshots
+    if: branch = deploy
 
 jobs:
   include:
@@ -31,3 +33,8 @@ jobs:
       script:
         - bash scripts/tidy.sh
         - bash scripts/buildAndroid.sh
+    - stage: screenshots
+      name: "Update Screenshots"
+      script:
+        - bash scripts/tidy.sh
+        - bash scripts/updateScreenshots.sh
