@@ -42,7 +42,7 @@ echo "----------------------------------------"
 echo "------ Monitoring App (APP) build ------"
 echo "----------------------------------------"
 echo ""
-buildUrl=`grep "https://expo.io/builds/" buildOutput.txt`
+buildUrl=`grep "https://expo.io/dashboard/${EXPO_USERNAME}/builds/" buildOutput.txt`
 echo "Build URL is $buildUrl"
 bash scripts/waitForBuildCompletion.sh $buildUrl
 
