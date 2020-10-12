@@ -64,8 +64,8 @@ echo "------------- Start Appium -------------"
 echo "----------------------------------------"
 npx appium &>! appium.log &
 appiumPID=$!
-echo "Give everything a moment to start..."
-sleep 10
+echo "Appium process ID: ${appiumPID}"
+bash scripts/waitForAppiumToStart.sh appium.log
 
 echo "----------------------------------------"
 echo "------------ Run Screenshots -----------"
