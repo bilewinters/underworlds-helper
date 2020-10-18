@@ -42,37 +42,37 @@ const player2 = 1;
 const onePlayerFlow = async (client) => {
   const menuScreen = await menuScreenModel(client);
   await takeScreenshot(client, imagePath("1-01-menu.png"));
-  // await menuScreen.clickOnePlayerButton();
+  await menuScreen.clickOnePlayerButton();
 
-  // await client.pause(2000);
-  // let gameScreen = await gameScreenModel(client, 1);
-  // await gameScreen.flipActivationsForPlayer(player1, 2);
-  // await gameScreen.addGloryToPlayer(player1, 3);
-  // await gameScreen.flipGloryForPlayer(player1, 0);
-  // await takeScreenshot(client, imagePath("1-02-OnePlayerRoundOne.png"));
-  // await gameScreen.flipActivationsForPlayer(player1, 2);
-  // await gameScreen.endRound();
+  await client.pause(2000);
+  let gameScreen = await gameScreenModel(client, 1);
+  await gameScreen.flipActivationsForPlayer(player1, 2);
+  await gameScreen.addGloryToPlayer(player1, 3);
+  await gameScreen.flipGloryForPlayer(player1, 0);
+  await takeScreenshot(client, imagePath("1-02-OnePlayerRoundOne.png"));
+  await gameScreen.flipActivationsForPlayer(player1, 2);
+  await gameScreen.endRound();
 
-  // await client.pause(2000);
-  // gameScreen = await gameScreenModel(client, 2);
-  // await gameScreen.flipActivationsForPlayer(player1, 1);
-  // await gameScreen.addGloryToPlayer(player1, 6);
-  // await gameScreen.flipGloryForPlayer(player1, 1, 2, 5, 6);
-  // await takeScreenshot(client, imagePath("1-03-OnePlayerRoundTwo.png"));
-  // await gameScreen.flipActivationsForPlayer(player1, 3);
-  // await gameScreen.endRound();
+  await client.pause(2000);
+  gameScreen = await gameScreenModel(client, 2);
+  await gameScreen.flipActivationsForPlayer(player1, 1);
+  await gameScreen.addGloryToPlayer(player1, 6);
+  await gameScreen.flipGloryForPlayer(player1, 1, 2, 5, 6);
+  await takeScreenshot(client, imagePath("1-03-OnePlayerRoundTwo.png"));
+  await gameScreen.flipActivationsForPlayer(player1, 3);
+  await gameScreen.endRound();
 
-  // await client.pause(2000);
-  // await gameScreen.flipActivationsForPlayer(player1, 4);
-  // await gameScreen.addGloryToPlayer(player1, 4);
-  // await gameScreen.flipGloryForPlayer(player1, 3, 4, 10);
-  // await takeScreenshot(client, imagePath("1-04-OnePlayerRoundThree.png"));
-  // await gameScreen.endRound();
+  await client.pause(2000);
+  await gameScreen.flipActivationsForPlayer(player1, 4);
+  await gameScreen.addGloryToPlayer(player1, 4);
+  await gameScreen.flipGloryForPlayer(player1, 3, 4, 10);
+  await takeScreenshot(client, imagePath("1-04-OnePlayerRoundThree.png"));
+  await gameScreen.endRound();
 
-  // await client.pause(2000);
-  // const summaryScreen = await summaryScreenModel(client);
-  // await takeScreenshot(client, imagePath("1-05-OnePlayerSummary.png"));
-  // await summaryScreen.toMenu();
+  await client.pause(2000);
+  const summaryScreen = await summaryScreenModel(client);
+  await takeScreenshot(client, imagePath("1-05-OnePlayerSummary.png"));
+  await summaryScreen.toMenu();
 };
 
 const twoPlayerFlow = async (client) => {
@@ -128,6 +128,6 @@ test("Perform Screenshots", async (done) => {
   }
   mkdirSync(imagesDirectory, { recursive: true });
   await onePlayerFlow(client);
+  await twoPlayerFlow(client);
   done();
-  // await twoPlayerFlow(client);
 }, 600000);
