@@ -79,10 +79,14 @@ echo "----------------------------------------"
 echo "------------- Appium Output ------------"
 echo "----------------------------------------"
 kill -9 $appiumPID
-cat appium.log
 ls -hal "marketing/screenshots/iPhone 11 Pro Max"
 ls -hal "marketing/screenshots/iPhone 8 Plus"
 ls -hal "marketing/screenshots/iPad Pro (12.9-inch) (3rd generation)"
 
 echo "Not actually doing anything with these screenshots currently!"
 echo "You should probably upload them somewhere :-)"
+
+echo "----------------------------------------"
+echo "-------------- Appium Logs -------------"
+echo "----------------------------------------"
+cat appium.log
