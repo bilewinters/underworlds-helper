@@ -76,14 +76,14 @@ echo "----------------------------------------"
 echo "------------ Run Screenshots -----------"
 echo "----------------------------------------"
 DEVICE_NAME="iPhone 11 Pro Max" APP_LOCATION=${appLocation} npm run screenshots
-DEVICE_NAME="iPhone 8 Plus" APP_LOCATION=${appLocation} npm run screenshots
-DEVICE_NAME="iPad Pro (12.9-inch) (3rd generation)" APP_LOCATION=${appLocation} npm run screenshots
+# DEVICE_NAME="iPhone 8 Plus" APP_LOCATION=${appLocation} npm run screenshots
+# DEVICE_NAME="iPad Pro (12.9-inch) (3rd generation)" APP_LOCATION=${appLocation} npm run screenshots
 
 echo "----------------------------------------"
 echo "------------- Appium Output ------------"
 echo "----------------------------------------"
 kill -9 $appiumPID
-cat appium-log.txt
+cat appium.log
 ls -hal "marketing/screenshots/iPhone 11 Pro Max"
 ls -hal "marketing/screenshots/iPhone 8 Plus"
 ls -hal "marketing/screenshots/iPad Pro (12.9-inch) (3rd generation)"
