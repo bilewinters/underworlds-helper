@@ -56,8 +56,13 @@ tarUrl=`grep -A5 $buildUrl buildStatus.txt | grep "IPA: https:"`
 tarUrl=${tarUrl/"IPA: "/""}
 curl ${tarUrl} > uwhelper-simulator.tar.gz
 gunzip -c uwhelper-simulator.tar.gz | tar xopf -
+echo "current directory:"
+pwd
 appLoacation=`pwd`
+echo "appLocation = ${appLocation}"
+ls $appLoacation
 appLocation="${appLocation}/uwhelper.app"
+echo "app = ${appLocation}"
 
 echo "----------------------------------------"
 echo "------------- Start Appium -------------"
