@@ -55,7 +55,12 @@ node_modules/expo-cli/bin/expo.js build:status > buildStatus.txt
 tarUrl=`grep -A5 $buildUrl buildStatus.txt | grep "IPA: https:"`
 tarUrl=${tarUrl/"IPA: "/""}
 curl ${tarUrl} > uwhelper-simulator.tar.gz
-gunzip -c uwhelper-simulator.tar.gz | tar xopf - 
+gunzip -c uwhelper-simulator.tar.gz | tar xopf -
+
+pwd
+ls -hal
+echo "TRAVIS_BUILD_DIR = ${TRAVIS_BUILD_DIR}"
+
 appLoacation="${TRAVIS_BUILD_DIR}/uwhelper.app"
 echo "appLocation = ${appLocation}"
 
