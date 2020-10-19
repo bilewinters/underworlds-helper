@@ -10,19 +10,19 @@ const hitSlop = {
 };
 
 export const BurgerIcon = ({ onPress, style = { marginLeft: 12 } }) => (
-  <TouchableOpacity onPress={onPress} hitSlop={hitSlop}>
+  <TouchableOpacity onPress={onPress} hitSlop={hitSlop} testID={"burger-menu-icon"} accessible accessibilityLabel={"burger-menu-icon"}>
     <Feather name="menu" size={32} color="white" style={style} />
   </TouchableOpacity>
 );
 
 export const CloseIcon = ({ onPress, style }) => (
-  <TouchableOpacity onPress={onPress} hitSlop={hitSlop}>
+  <TouchableOpacity onPress={onPress} hitSlop={hitSlop} testID={"x-close-icon"} accessible accessibilityLabel={"x-close-icon"}>
     <Feather name="x" size={32} color="white" style={style} />
   </TouchableOpacity>
 );
 
 export const RotateIcon = ({ onPress, style = { marginRight: 12 } }) => (
-  <TouchableOpacity onPress={onPress} hitSlop={hitSlop}>
+  <TouchableOpacity onPress={onPress} hitSlop={hitSlop} testID={"vs-rotate-icon"} accessible accessibilityLabel={"vs-rotate-icon"}>
     <Feather name="rotate-cw" size={32} color="white" style={style} />
   </TouchableOpacity>
 );

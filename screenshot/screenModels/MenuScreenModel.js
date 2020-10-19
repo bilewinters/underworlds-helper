@@ -6,6 +6,7 @@ const menuScreenModel = async client => {
   return {
     clickOnePlayerButton: async () => onePlayerButton.click(),
     clickTwoPlayerButton: async () => (await getElement(client, '~menu-2-player-button')).click(),
+    clickArenaMortisButton: async () => (await getElement(client, '~menu-mortis-button')).click(),
     clickContinueButton: async () => (await getElement(client, '~menu-continue-button')).click(),
   };
 };

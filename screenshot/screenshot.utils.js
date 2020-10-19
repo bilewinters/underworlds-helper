@@ -52,7 +52,7 @@ export const addMarketingText = async (imageFile, text) => {
     .resize(Math.floor(width * 0.8), Math.floor(height * 0.8))
     .toBuffer();
 
-  sharp({
+  return sharp({
     create: {
       width,
       height,

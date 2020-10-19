@@ -121,6 +121,7 @@ const InitiativeToken = ({
   disabled,
   style,
   onPress,
+  testID,
 }) => (
   <Token
     activeOpacity={1}
@@ -128,7 +129,7 @@ const InitiativeToken = ({
     disabled={disabled}
     onPress={onPress}
     id={value}
-    testID={`initiative-token-${value}`}
+    testID={testID || `initiative-token-${value}`}
     style={{
       ...styles.initiative,
       ...(style || {}),

@@ -33,7 +33,6 @@ import { InitiativeToken } from "@/components/Token";
 import { sizes } from "@/constants";
 import Activations from "./Activations";
 import Glory from "./Glory";
-import { largeToken } from "../components/Token";
 
 const styles = StyleSheet.create({
   container: {
@@ -107,6 +106,7 @@ class MortisGame extends React.Component {
               <View style={{ width: 8 }} />
               <View ref={this.initiativeRef} onLayout={() => {}}>
                 <InitiativeToken
+                  testID={"change-initiative"}
                   value={initiative}
                   selected={false}
                   disabled={false}

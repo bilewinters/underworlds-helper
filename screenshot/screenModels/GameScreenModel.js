@@ -53,8 +53,38 @@ const gameScreenModel = async (client, round) => {
     return model;
   };
 
+  model.vsFlip = async () => {
+    const element = await getElement(client, '~vs-rotate-icon');
+    await element.click();
+    return model;
+  }
+
   model.endRound = async () => {
     const element = await getElement(client, '~end-of-round-button');
+    await element.click();
+    return model;
+  };
+
+  model.openSideMenu = async () => {
+    const element = await getElement(client, '~burger-menu-icon');
+    await element.click();
+    return model;
+  };
+
+  model.closeSideMenu = async () => {
+    const element = await getElement(client, '~x-close-icon');
+    await element.click();
+    return model;
+  };
+
+  model.openInitiative = async () => {
+    const element = await getElement(client, '~change-initiative');
+    await element.click();
+    return model;
+  };
+
+  model.selectInitiative = async (value) => {
+    const element = await getElement(client, `~initiative-token-${value}`);
     await element.click();
     return model;
   };

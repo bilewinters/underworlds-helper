@@ -1,7 +1,7 @@
 import path from "path";
 import { execSync } from "child_process";
 import { mkdirSync } from "fs";
-import { takeScreenshot } from "./screenshot.utils";
+import { takeScreenshot, addMarketingText } from "./screenshot.utils";
 
 import menuScreenModel from "./screenModels/MenuScreenModel";
 import gameScreenModel from "./screenModels/GameScreenModel";
@@ -59,6 +59,8 @@ const onePlayerFlow = async (client) => {
   await gameScreen.addGloryToPlayer(player1, 6);
   await gameScreen.flipGloryForPlayer(player1, 1, 2, 5, 6);
   await takeScreenshot(client, imagePath("1-03-OnePlayerRoundTwo.png"));
+  await client.pause(1000);
+  await addMarketingText(imagePath("1-03-OnePlayerRoundTwo.png"), "Track your Activations, Glory and Rounds");
   await gameScreen.flipActivationsForPlayer(player1, 3);
   await gameScreen.endRound();
 
@@ -100,8 +102,22 @@ const twoPlayerFlow = async (client) => {
   await gameScreen.addGloryToPlayer(player2, 4);
   await gameScreen.flipGloryForPlayer(player2, 0, 1, 2);
   await takeScreenshot(client, imagePath("2-02-TwoPlayerRoundTwo.png"));
+  await client.pause(1000);
+  await addMarketingText(imagePath("2-02-TwoPlayerRoundTwo.png"), "Track you and your opponent");
+  await gameScreen.vsFlip();
+  await client.pause(1000);
+  await takeScreenshot(client, imagePath("2-03-TwoPlayerRoundTwoVs.png"));
+  await client.pause(1000);
+  await addMarketingText(imagePath("2-03-TwoPlayerRoundTwoVs.png"), "Both players can use one device");
   await gameScreen.flipActivationsForPlayer(player1, 2);
   await gameScreen.flipActivationsForPlayer(player2, 1);
+  await gameScreen.openSideMenu();
+  await client.pause(1000);
+  await takeScreenshot(client, imagePath("2-04-OpenSideMenu.png"));
+  await client.pause(1000);
+  await addMarketingText(imagePath("2-04-OpenSideMenu.png"), "Continue your last game, or quickly start a new one");
+  await gameScreen.closeSideMenu();
+  await client.pause(1000);
   await gameScreen.endRound();
 
   await client.pause(2000);
@@ -112,14 +128,32 @@ const twoPlayerFlow = async (client) => {
   await gameScreen.flipGloryForPlayer(player1, 4, 9);
   await gameScreen.addGloryToPlayer(player2, 6);
   await gameScreen.flipGloryForPlayer(player2, 3, 4, 5, 6, 7, 8);
-  await takeScreenshot(client, imagePath("2-03-TwoPlayerRoundThree.png"));
+  await takeScreenshot(client, imagePath("2-05-TwoPlayerRoundThree.png"));
   await gameScreen.endRound();
 
   await client.pause(2000);
   const summaryScreen = await summaryScreenModel(client);
-  await takeScreenshot(client, imagePath("2-04-TwoPlayerSummary.png"));
+  await takeScreenshot(client, imagePath("2-06-TwoPlayerSummary.png"));
   await summaryScreen.toMenu();
 };
+
+const mortisFlow = async (client) => {
+  const menuScreen = await menuScreenModel(client);
+  await menuScreen.clickArenaMortisButton();
+  await client.pause(2000);
+  let gameScreen = await gameScreenModel(client, 1);
+  await gameScreen.flipActivationsForPlayer(player1, 6);
+  await gameScreen.addGloryToPlayer(player1, 6);
+  await gameScreen.flipGloryForPlayer(player1, 2);
+  await takeScreenshot(client, imagePath("3-01-MortisScreen.png"));
+  await client.pause(1000);
+  await addMarketingText(imagePath("3-01-MortisScreen.png"), "Supports Arena Mortis");
+  await gameScreen.openInitiative();
+  await client.pause(2000);
+  await takeScreenshot(client, imagePath("3-02-MortisInitiative.png"));
+  await client.pause(1000);
+  await addMarketingText(imagePath("3-02-MortisInitiative.png"), "Your initiative at your fingertips");
+}
 
 test("Perform Screenshots", async (done) => {
   const client = await wdio.remote(opts);
@@ -129,5 +163,6 @@ test("Perform Screenshots", async (done) => {
   mkdirSync(imagesDirectory, { recursive: true });
   await onePlayerFlow(client);
   await twoPlayerFlow(client);
+  await mortisFlow(client);
   done();
 }, 600000);
