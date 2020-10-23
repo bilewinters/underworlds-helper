@@ -63,7 +63,7 @@ echo "appLocation = ${appLocation}"
 echo "----------------------------------------"
 echo "------------- Start Appium -------------"
 echo "----------------------------------------"
-
+node node_modules/appium/build/lib/main.js > appium.log &
 appiumPID=$!
 echo "Appium process ID: ${appiumPID}"
 bash scripts/waitForAppiumToStart.sh appium.log
