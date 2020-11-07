@@ -81,10 +81,7 @@ echo "----------------------------------------"
 echo "------------- Appium Output ------------"
 echo "----------------------------------------"
 kill -9 $appiumPID
-ls -hal "marketing/screenshots/iPhone 11 Pro Max"
-ls -hal "marketing/screenshots/iPhone 8 Plus"
-ls -hal "marketing/screenshots/iPad Pro (12.9-inch) (4th generation)"
-ls -hal "marketing/screenshots/iPad Pro (11-inch) (2nd generation)"
+ls -hal "screenshots/en-GB"
 
 echo "Not actually doing anything with these screenshots currently!"
 echo "You should probably upload them somewhere :-)"
