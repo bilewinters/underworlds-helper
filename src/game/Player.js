@@ -13,6 +13,7 @@ import Activations from "./Activations";
 import Glory from "./Glory";
 import { sizes } from "@/constants";
 import { activationsForRound } from "./gameUtils";
+import { isTablet } from "@/system/systemUtils"
 
 const styles = StyleSheet.create({
   container: {
@@ -37,7 +38,7 @@ const Player = ({
       onPress={(activationIndex) =>
         flipActivation(playerIndex, activationIndex, dispatch)
       }
-      size={multiPlayer ? sizes.small : sizes.large}
+      size={multiPlayer && !isTablet() ? sizes.small : sizes.large}
     />
     <Glory
       glory={glory}
@@ -45,7 +46,7 @@ const Player = ({
       onAddGlory={() => addGlory(playerIndex, dispatch)}
       onRemoveGlory={() => removeGlory(playerIndex, dispatch)}
       onFlipGlory={(gloryIndex) => flipGlory(playerIndex, gloryIndex, dispatch)}
-      size={multiPlayer ? sizes.small : sizes.large}
+      size={multiPlayer && !isTablet() ? sizes.small : sizes.large}
     />
   </View>
 );

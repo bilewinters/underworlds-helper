@@ -4,9 +4,11 @@ import { View, StyleSheet, Text } from "react-native";
 import Constants from "expo-constants";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
+import * as Device from 'expo-device';
 
 import designTokens from "@design/tokens";
 import { BackgroundGlass, Logo } from "@/components";
+import { setDeviceIsTablet } from "@/system/systemUtils";
 import buildInfo from "../../buildInfo.json";
 
 const styles = StyleSheet.create({
@@ -45,7 +47,11 @@ const loadAssets = async () =>
 class Splash extends React.Component {
   async componentDidMount() {
     const { onFinishLoading } = this.props;
-    await Promise.all([loadAssets(), new Promise((r) => setTimeout(r, 1000))]);
+    await Promise.all([
+      loadAssets(), 
+      Device.getDeviceTypeAsync().then(deviceType => setDeviceIsTablet(deviceType === Device.DeviceType.TABLET)),
+      new Promise((r) => setTimeout(r, 1000))
+    ]);
     onFinishLoading();
   }
 

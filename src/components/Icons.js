@@ -11,7 +11,7 @@ const hitSlop = {
 
 export const BurgerIcon = ({ onPress, style = { marginLeft: 12 } }) => (
   <TouchableOpacity onPress={onPress} hitSlop={hitSlop} >
-    <View testID={"burger-menu-icon"} accessible accessibilityLabel={"burger-menu-icon"}>
+    <View testID="burger-menu-icon" accessible accessibilityLabel="burger-menu-icon">
       <Feather name="menu" size={32} color="white" style={style} />
     </View>
   </TouchableOpacity>
@@ -19,7 +19,7 @@ export const BurgerIcon = ({ onPress, style = { marginLeft: 12 } }) => (
 
 export const CloseIcon = ({ onPress, style }) => (
   <TouchableOpacity onPress={onPress} hitSlop={hitSlop}>
-    <View testID={"x-close-icon"} accessible accessibilityLabel={"x-close-icon"}>
+    <View testID="x-close-icon" accessible accessibilityLabel="x-close-icon">
       <Feather name="x" size={32} color="white" style={style} />
     </View>
   </TouchableOpacity>
@@ -27,7 +27,7 @@ export const CloseIcon = ({ onPress, style }) => (
 
 export const RotateIcon = ({ onPress, style = { marginRight: 12 } }) => (
   <TouchableOpacity onPress={onPress} hitSlop={hitSlop}>
-    <View testID={"vs-rotate-icon"} accessible accessibilityLabel={"vs-rotate-icon"}>
+    <View testID="vs-rotate-icon" accessible accessibilityLabel="vs-rotate-icon">
       <Feather name="rotate-cw" size={32} color="white" style={style} />
     </View>
   </TouchableOpacity>

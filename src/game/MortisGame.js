@@ -68,7 +68,7 @@ class MortisGame extends React.Component {
         }
       >
         <View style={styles.roundTextWrap}>
-          <Title style={styles.roundText} testID="game-label">
+          <Title style={styles.roundText} testID="round-label">
             Arena Mortis
           </Title>
         </View>

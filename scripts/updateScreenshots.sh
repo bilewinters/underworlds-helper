@@ -71,17 +71,20 @@ bash scripts/waitForAppiumToStart.sh appium.log
 echo "----------------------------------------"
 echo "------------ Run Screenshots -----------"
 echo "----------------------------------------"
-DEVICE_NAME="iPhone 11 Pro Max" APP_LOCATION=${appLocation} npm run screenshots
-# DEVICE_NAME="iPhone 8 Plus" APP_LOCATION=${appLocation} npm run screenshots
-# DEVICE_NAME="iPad Pro (12.9-inch) (3rd generation)" APP_LOCATION=${appLocation} npm run screenshots
+cp assets/fonts/SavaPro-Semibold.otf ~/Library/Fonts
+DEVICE_NAME="iPhone 11 Pro Max" IMAGE_PREFIX="APP_IPHONE_55" APP_LOCATION=${appLocation} npm run screenshots
+DEVICE_NAME="iPhone 8 Plus" IMAGE_PREFIX="APP_IPHONE_65" APP_LOCATION=${appLocation} npm run screenshots
+DEVICE_NAME="iPad Pro (12.9-inch) (4th generation)" IMAGE_PREFIX="APP_IPAD_PRO_4GEN_129" APP_LOCATION=${appLocation} npm run screenshots
+DEVICE_NAME="iPad Pro (11-inch) (2nd generation)" IMAGE_PREFIX="APP_IPAD_PRO_11" APP_LOCATION=${appLocation} npm run screenshots
 
 echo "----------------------------------------"
 echo "------------- Appium Output ------------"
 echo "----------------------------------------"
 kill -9 $appiumPID
 ls -hal "marketing/screenshots/iPhone 11 Pro Max"
-# ls -hal "marketing/screenshots/iPhone 8 Plus"
-# ls -hal "marketing/screenshots/iPad Pro (12.9-inch) (3rd generation)"
+ls -hal "marketing/screenshots/iPhone 8 Plus"
+ls -hal "marketing/screenshots/iPad Pro (12.9-inch) (4th generation)"
+ls -hal "marketing/screenshots/iPad Pro (11-inch) (2nd generation)"
 
 echo "Not actually doing anything with these screenshots currently!"
 echo "You should probably upload them somewhere :-)"

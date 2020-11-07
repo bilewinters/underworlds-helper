@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-raw-text */
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   View,
   SafeAreaView,
@@ -71,9 +71,14 @@ const MenuItem = ({ children, onPress }) => (
 
 const SideMenu = ({ dispatch, showSideMenu, children }) => {
   const { width } = Dimensions.get("window");
+  const [menuMounted, setMenuMounted] = useState(false);
   const menuPosition = useRef(new Animated.Value(-width)).current;
   const overlayOpacity = useRef(new Animated.Value(0)).current;
   useEffect(() => {
+    if (showSideMenu && !menuMounted) {
+      setMenuMounted(true);
+      return;
+    }
     Animated.parallel([
       Animated.timing(menuPosition, {
         toValue: showSideMenu ? 0 : -width,
@@ -85,74 +90,80 @@ const SideMenu = ({ dispatch, showSideMenu, children }) => {
         duration: 300,
         useNativeDriver: true,
       }),
-    ]).start();
-  }, [showSideMenu, width]);
+    ]).start(() => {
+      if(!showSideMenu) {
+        setMenuMounted(false);
+      }
+    });
+  }, [menuMounted, showSideMenu, width]);
 
   return (
     <>
       <View style={styles.app}>{children}</View>
-      <Animated.View
-        style={[
-          styles.menuWrapper,
-          {
-            transform: [{ translateX: menuPosition }],
-          },
-        ]}
-      >
-        <View style={styles.menu}>
-          <SafeAreaView>
-            <Header
-              right={<CloseIcon onPress={() => hideSideMenu(dispatch)} />}
+      {menuMounted &&
+        <Animated.View
+          style={[
+            styles.menuWrapper,
+            {
+              transform: [{ translateX: menuPosition }],
+            },
+          ]}
+        >
+          <View style={styles.menu}>
+            <SafeAreaView>
+              <Header
+                right={<CloseIcon onPress={() => hideSideMenu(dispatch)} />}
+              />
+              <MenuItemBorder />
+              <MenuItem
+                onPress={() => {
+                  moveToMenu(dispatch);
+                  hideSideMenu(dispatch);
+                }}
+              >
+                <Label>Main Menu</Label>
+              </MenuItem>
+              <MenuItem
+                onPress={() => {
+                  initialiseGame(1, dispatch);
+                  hideSideMenu(dispatch);
+                }}
+              >
+                <Label>New 1 Player Game</Label>
+              </MenuItem>
+              <MenuItem
+                onPress={() => {
+                  initialiseGame(2, dispatch);
+                  hideSideMenu(dispatch);
+                }}
+              >
+                <Label>New 2 Player Game</Label>
+              </MenuItem>
+              <MenuItem
+                onPress={() => {
+                  initialiseMortisGame(dispatch);
+                  hideSideMenu(dispatch);
+                }}
+              >
+                <Label>New Arena Mortis Game</Label>
+              </MenuItem>
+              <MenuItem
+                onPress={() => {
+                  continueGame(dispatch);
+                  hideSideMenu(dispatch);
+                }}
+              >
+                <Label>Continue Last Game</Label>
+              </MenuItem>
+            </SafeAreaView>
+          </View>
+          <TouchableWithoutFeedback onPress={() => hideSideMenu(dispatch)}>
+            <Animated.View
+              style={[styles.screenOverlay, { opacity: overlayOpacity }]}
             />
-            <MenuItemBorder />
-            <MenuItem
-              onPress={() => {
-                moveToMenu(dispatch);
-                hideSideMenu(dispatch);
-              }}
-            >
-              <Label>Main Menu</Label>
-            </MenuItem>
-            <MenuItem
-              onPress={() => {
-                initialiseGame(1, dispatch);
-                hideSideMenu(dispatch);
-              }}
-            >
-              <Label>New 1 Player Game</Label>
-            </MenuItem>
-            <MenuItem
-              onPress={() => {
-                initialiseGame(2, dispatch);
-                hideSideMenu(dispatch);
-              }}
-            >
-              <Label>New 2 Player Game</Label>
-            </MenuItem>
-            <MenuItem
-              onPress={() => {
-                initialiseMortisGame(dispatch);
-                hideSideMenu(dispatch);
-              }}
-            >
-              <Label>New Arena Mortis Game</Label>
-            </MenuItem>
-            <MenuItem
-              onPress={() => {
-                continueGame(dispatch);
-                hideSideMenu(dispatch);
-              }}
-            >
-              <Label>Continue Last Game</Label>
-            </MenuItem>
-          </SafeAreaView>
-        </View>
-        <TouchableWithoutFeedback onPress={() => hideSideMenu(dispatch)}>
-          <Animated.View
-            style={[styles.screenOverlay, { opacity: overlayOpacity }]}
-          />
-        </TouchableWithoutFeedback>
-      </Animated.View>
+          </TouchableWithoutFeedback>
+        </Animated.View>
+      }
     </>
   );
 };
