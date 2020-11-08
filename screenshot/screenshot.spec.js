@@ -1,6 +1,6 @@
 import path from "path";
 import { execSync } from "child_process";
-import { mkdirSync } from "fs";
+import { mkdirSync, writeFileSync } from "fs";
 import { takeScreenshot, addMarketingText } from "./screenshot.utils";
 
 import menuScreenModel from "./screenModels/MenuScreenModel";
@@ -15,6 +15,7 @@ const shouldExpoInstall = Boolean(process.env.SHOULD_EXPO_INSTALL);
 const root = path.resolve(path.join(__dirname, "../"));
 const screenshotsDirectory = path.resolve(path.join(root, "screenshots"));
 const imagesDirectory = path.resolve(path.join(screenshotsDirectory, "en-GB"));
+const videoFile = path.resolve(path.join(imagesDirectory, `${process.env.IMAGE_PREFIX}.mp4`));
 const imagePath = (imageName) =>
   path.resolve(path.join(imagesDirectory, `${imageName}_${process.env.IMAGE_PREFIX}_${imageName}.png`));
 
@@ -159,8 +160,10 @@ test("Perform Screenshots", async (done) => {
     execSync("node_modules/expo-cli/bin/expo.js ios", { cwd: root });
   }
   mkdirSync(imagesDirectory, { recursive: true });
+  client.startRecordingScreen({ videoType: 'mpeg4', videoQuality: 'photo', videoFps: '60'});
   await onePlayerFlow(client);
   await twoPlayerFlow(client);
   await mortisFlow(client);
+  await client.saveRecordingScreen(videoFile);
   done();
 }, 600000);
