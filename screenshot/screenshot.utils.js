@@ -2,12 +2,17 @@
 /* eslint-disable no-plusplus */
 import sharp from "sharp";
 
+const isAndroid = process.env.ANDROID === "true";
+
 export const iPhone11ProMaxDimensions = {
   width: 1242,
   height: 2688,
 };
 
 export const getElement = async (client, selector, timeout = 10000) => {
+  if (isAndroid) {
+    await client.pause(300);
+  }
   let timeoutCount = timeout / 1000;
   let elements = await client.$$(selector);
   while ((elements.error || elements.length < 1) && timeoutCount > 0) {

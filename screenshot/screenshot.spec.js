@@ -20,11 +20,21 @@ const imagePath = (imageName) =>
   path.resolve(path.join(imagesDirectory, `${imageName}_${process.env.IMAGE_PREFIX}_${imageName}.png`));
 
 const opts = {
-  port: 4723,
-  path: "/wd/hub",
-  capabilities: {
-    platformName: "iOS",
+  "port": 4723,
+  "path": "/wd/hub",
+  "capabilities": process.env.ANDROID === "true" ? {
+    platformName: "android",
     maxInstances: 1,
+    "appium:deviceName": device,
+    "appium:platformVersion": "10",
+    "appium:orientation": "PORTRAIT",
+    "appium:automationName": "UiAutomator2",
+    "appium:app": appLocation,
+    "appium:noReset": true,
+    "appium:newCommandTimeout": 240,
+  } : {
+    "platformName": "iOS",
+    "maxInstances": 1,
     "appium:deviceName": device,
     "appium:platformVersion": "13.5",
     "appium:orientation": "PORTRAIT",
@@ -160,10 +170,10 @@ test("Perform Screenshots", async (done) => {
     execSync("node_modules/expo-cli/bin/expo.js ios", { cwd: root });
   }
   mkdirSync(imagesDirectory, { recursive: true });
-  client.startRecordingScreen({ videoType: 'mpeg4', videoQuality: 'photo', videoFps: '60'});
+  // client.startRecordingScreen({ videoType: 'mpeg4', timeLimit: '300', videoQuality: 'photo', videoFps: '60'});
   await onePlayerFlow(client);
   await twoPlayerFlow(client);
   await mortisFlow(client);
-  await client.saveRecordingScreen(videoFile);
+  // await client.saveRecordingScreen(videoFile);
   done();
 }, 600000);

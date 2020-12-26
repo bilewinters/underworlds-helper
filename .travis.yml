@@ -13,8 +13,8 @@ stages:
     if: branch = deploy
   - name: build
     if: branch = deploy
-  - name: screenshots
-    if: branch IN (deploy, screenshots)
+  # - name: screenshots
+  #   if: branch IN (deploy, screenshots)
 
 jobs:
   include:
