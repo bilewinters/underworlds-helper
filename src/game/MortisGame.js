@@ -4,13 +4,12 @@ import {
   View,
   SafeAreaView,
   StyleSheet,
-  BackHandler,
   Platform,
 } from "react-native";
 import { connect } from "react-redux";
-import { useNavigationState } from "@react-navigation/native";
 
 import {
+  Clock,
   BackgroundPlain,
   Title,
   Header,
@@ -20,7 +19,6 @@ import {
 } from "@/components";
 import {
   moveToSummary,
-  moveToMenu,
   flipActivation,
   addGlory,
   removeGlory,
@@ -77,11 +75,12 @@ class MortisGame extends React.Component {
   }
 
   render() {
-    const { players, initiative, dispatch } = this.props;
+    const { players, initiative, clockShowing, startTime, dispatch } = this.props;
     const { activations, glory } = players[0];
     return (
       <BackgroundPlain>
         {this.renderHeader()}
+        {clockShowing && <Clock startTime={startTime}/>}
         <SafeAreaView style={styles.container}>
           <View style={styles.container}>
             <Activations
@@ -159,7 +158,9 @@ class MortisGame extends React.Component {
 const mapStateToProps = () => (state) => {
   return {
     ...state.game.games[state.game.currentGameId].gameState,
+    startTime: state.game.games[state.game.currentGameId].startDateTime,
     initiative: state.game.games[state.game.currentGameId].initiative,
+    clockShowing: state.system.clockShowing,
   };
 };
 

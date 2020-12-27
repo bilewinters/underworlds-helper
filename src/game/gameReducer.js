@@ -23,6 +23,7 @@ const newGame = (id, startDateTime, numberOfPlayers, isArenaMortis) => ({
     round: 1,
     complete: false,
     vs: false,
+    roundEndTimes: [],
     players: new Array(numberOfPlayers)
       .fill(undefined)
       .map((_, playerIndex) => initialisePlayer(playerIndex, isArenaMortis)),
@@ -88,7 +89,13 @@ const reducer = (state = { games: {} }, action) => {
     }
     case actionTypes.nextRoundUpdateType: {
       const newState = deepClone(state);
-      newState.games[newState.currentGameId].gameState.round += 1;
+      const { round: currentRound, roundEndTimes } = newState.games[newState.currentGameId].gameState;
+      if (action.updateRound) {
+        newState.games[newState.currentGameId].gameState.round = currentRound + 1;
+      }
+      if (roundEndTimes) {
+        roundEndTimes[currentRound - 1] = (Date.now()/1000)*1000;
+      }
       return newState;
     }
     case actionTypes.nextRoundMoveType: {

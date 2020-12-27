@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { useNavigationState } from "@react-navigation/native";
 
 import {
+  Clock,
   BackgroundPlain,
   Title,
   Header,
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
   roundTextWrap: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center"
   },
   roundText: {
     paddingTop: getTitleFontPaddingTop(Platform.OS),
@@ -49,6 +51,7 @@ const allRoundActivationsUsed = (players, round) =>
 
 const RoundHeader = ({ round, players, vs, dispatch }) => {
   const multiPlayer = players.length > 1;
+  
   return (
     <Header
       left={<BurgerIcon onPress={() => showSideMenu(dispatch)} />}
@@ -92,7 +95,7 @@ const RoundPlayer = ({ player, round, multiPlayer, rotated }) => (
   />
 );
 
-const Round = ({ round, players, vs, dispatch }) => {
+const Round = ({ round, players, vs, clockShowing, startTime, dispatch }) => {
   const multiPlayer = players.length > 1;
   const player1 = players[0];
   const player2 = multiPlayer ? players[1] : undefined;
@@ -124,6 +127,7 @@ const Round = ({ round, players, vs, dispatch }) => {
         />
       )}
       <SafeAreaView style={styles.container}>
+        {clockShowing && <Clock startTime={startTime}/>}
         <RoundPlayer
           player={player1}
           round={round}
@@ -153,6 +157,8 @@ const Round = ({ round, players, vs, dispatch }) => {
 
 const mapStateToProps = (round) => (state) => ({
   ...state.game.games[state.game.currentGameId].gameState,
+  startTime: state.game.games[state.game.currentGameId].startDateTime,
+  clockShowing: state.system.clockShowing,
   round,
 });
 

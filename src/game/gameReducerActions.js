@@ -99,6 +99,7 @@ export const flipGlory = (playerIndex, gloryIndex, dispatch) =>
 export const nextRound = (dispatch) => {
   dispatch({
     type: nextRoundUpdateType,
+    updateRound: true,
   });
   dispatch({
     type: nextRoundMoveType,
@@ -115,6 +116,10 @@ export const previousRound = (dispatch) => {
 };
 
 export const moveToSummary = (dispatch) => {
+  dispatch({
+    type: nextRoundUpdateType,
+    updateRound: false,
+  });
   dispatch({
     type: moveToSummaryType,
   });

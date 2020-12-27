@@ -4,7 +4,7 @@ import { View, SafeAreaView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import designTokens from '@design/tokens';
-import { BackgroundGlass, Heading, Title, Label, Header, Button } from '@/components';
+import { BackgroundGlass, Heading, Title, Label, Header, Button, Clock } from '@/components';
 import { moveBackToGame, completeGame } from './gameReducerActions';
 
 const styles = StyleSheet.create({
@@ -25,6 +25,19 @@ const styles = StyleSheet.create({
     padding: 16,
     justifyContent: 'space-between',
   },
+  summaryTimesContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    padding: 16,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  summaryTime: {
+    marginTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   summaryButton: {
     width: 150,
     alignItems: 'center',
@@ -34,7 +47,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Summary = ({ players, dispatch }) => (
+const Summary = ({ players, startTime, roundEndTimes, dispatch }) => (
   <BackgroundGlass>
     <Header>
       <Title>Summary</Title>
@@ -49,6 +62,16 @@ const Summary = ({ players, dispatch }) => (
           <Title>Glory Points</Title>
         </View>
       ))}
+      {roundEndTimes && <View style={styles.summaryTimesContainer}>
+        {roundEndTimes.map((endTime, index) => (
+          <View key={`${endTime}`} style={styles.summaryTime}>
+            <Label>Round {index + 1} - </Label><Clock accurate startTime={index === 0 ? startTime : roundEndTimes[index - 1]} endTime={endTime}/>
+          </View>
+        ))}
+        <View style={styles.summaryTime}>
+          <Label>Game - </Label><Clock accurate startTime={startTime} endTime={roundEndTimes[roundEndTimes.length - 1]}/>
+        </View>
+      </View>}
       <View style={styles.summaryButtonsContainer}>
         <SummaryButton testID="back-to-game-button" onPress={() => moveBackToGame(dispatch)}>
           Back to game
@@ -72,6 +95,7 @@ const SummaryButton = ({ onPress, children, testID }) => (
 );
 
 const mapStateToProps = state => ({
+  startTime: state.game.games[state.game.currentGameId].startDateTime,
   ...state.game.games[state.game.currentGameId].gameState,
 });
 

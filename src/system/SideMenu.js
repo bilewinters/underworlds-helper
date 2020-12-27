@@ -9,12 +9,13 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Platform,
+  Switch,
 } from "react-native";
 import tokens from "@design/tokens";
 import { connect } from "react-redux";
 
 import { Label, Header, CloseIcon } from "@/components";
-import { hideSideMenu } from "@/system/systemReducer";
+import { hideSideMenu, showClock, hideClock } from "@/system/systemReducer";
 import {
   initialiseGame,
   initialiseMortisGame,
@@ -48,14 +49,18 @@ const styles = StyleSheet.create({
   menuItem: {
     paddingTop: getLabelFontPaddingTop(Platform.OS),
     height: 55,
-    alignItems: "flex-start",
-    justifyContent: "center",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flexDirection: "row"
   },
   menuItemBorder: {
     width: "100%",
     borderBottomWidth: 1,
     borderBottomColor: tokens.pallet.grey,
   },
+  switch: {
+    marginRight: 8,
+  }
 });
 
 const MenuItemBorder = () => <View style={styles.menuItemBorder} />;
@@ -69,7 +74,7 @@ const MenuItem = ({ children, onPress }) => (
   </>
 );
 
-const SideMenu = ({ dispatch, showSideMenu, children }) => {
+const SideMenu = ({ dispatch, showSideMenu, clockShowing, children }) => {
   const { width } = Dimensions.get("window");
   const [menuMounted, setMenuMounted] = useState(false);
   const menuPosition = useRef(new Animated.Value(-width)).current;
@@ -155,6 +160,19 @@ const SideMenu = ({ dispatch, showSideMenu, children }) => {
               >
                 <Label>Continue Last Game</Label>
               </MenuItem>
+              <MenuItem
+                onPress={() => clockShowing ? hideClock(dispatch) : showClock(dispatch)}
+              >
+                <Switch
+                  style={styles.switch}
+                  trackColor={{false: tokens.pallet.grey, true: tokens.pallet.white}}
+                  ios_backgroundColor={tokens.pallet.grey}
+                  thumbColor={clockShowing ? tokens.pallet.grey : tokens.pallet.white }
+                  value={clockShowing}
+                  onValueChange={() => clockShowing ? hideClock(dispatch) : showClock(dispatch)}
+                />
+              <Label>Game clock</Label>
+              </MenuItem>
             </SafeAreaView>
           </View>
           <TouchableWithoutFeedback onPress={() => hideSideMenu(dispatch)}>
@@ -170,6 +188,7 @@ const SideMenu = ({ dispatch, showSideMenu, children }) => {
 
 const mapStateToProps = (state) => ({
   showSideMenu: state.system.showSideMenu,
+  clockShowing: state.system.clockShowing,
 });
 
 export default connect(mapStateToProps)(SideMenu);

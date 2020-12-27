@@ -6,8 +6,10 @@ import Header from "./Header";
 import Button from "./Button";
 import Initiative from "./Initiative";
 import { BurgerIcon, CloseIcon, RotateIcon } from "./Icons";
+import Clock from "./Clock";
 
 export {
+  Clock,
   BackgroundPlain,
   BackgroundGlass,
   Heading,
