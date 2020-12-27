@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { StyleSheet } from "react-native";
-import { differenceInSeconds } from "date-fns"
 import padStart from 'lodash.padstart';
 
 import { Label } from "./Text";
@@ -14,21 +13,49 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Clock({ startTime, endTime, accurate }) {
-  const accuracy = accurate ? 1 : 1;
-  const [timeInGame, setTimeInGame] = useState(Math.floor(differenceInSeconds(endTime || Date.now(), startTime)/accuracy)*accuracy);
-  useEffect(() => {
-    if (!endTime && timeInGame < clockMaxSeconds) {
-      const interval = setInterval(() => {
-        const ellasped =  Math.floor(differenceInSeconds(Date.now(), startTime)/accuracy)*accuracy;
-        if (ellasped - timeInGame >= 1) {
-          setTimeInGame(ellasped);
-        }
-      }, 300);
-      return () => clearInterval(interval);
+const tasks = [];
+let timerId = NaN;
+
+const startTimer = () => {
+  timerId = setInterval(() => {
+    tasks.forEach(task => {
+      try {
+        task();
+      } catch (e) {}
+    });
+  }, 200);
+}
+
+const stopTimer = () => clearInterval(timerId);
+
+const addTaskToTimer = (task) => {
+  if (tasks.length === 0) {
+    startTimer();
+  }
+  tasks.push(task);
+  return () => {
+    const taskIndex = tasks.indexOf(task);
+    tasks.splice(taskIndex, 1);
+    if (tasks.length === 0) {
+      stopTimer();
     }
-  }, [timeInGame]);
-  const minutes = Math.min(Math.floor(timeInGame / 60), clockMaxMinutes);
-  const seconds = timeInGame < clockMaxSeconds ? timeInGame % 60 : 59;
+  }
+}
+
+export default function Clock({ startTime, endTime }) {
+  const gameStart = useMemo(() => Math.round(startTime/1000), []);
+  const [secondsInGame, setTimeInGame] = useState(endTime ? Math.round(endTime/1000) - gameStart : 0);
+  useEffect(() => {
+    if (!endTime) {
+      return addTaskToTimer(() => {
+        const ellapsed = Math.round(Date.now()/1000) - gameStart;
+        if (ellapsed <= clockMaxSeconds && ellapsed > secondsInGame) {
+          setTimeInGame(ellapsed)
+        }
+      })
+    }
+  }, []);
+  const minutes = Math.min(Math.floor(secondsInGame / 60), clockMaxMinutes);
+  const seconds = secondsInGame < clockMaxSeconds ? secondsInGame % 60 : 59;
   return <Label style={styles.clockText}>{padStart(`${minutes}`, 2, '0')}:{padStart(`${seconds}`, 2, '0')}</Label>
 }

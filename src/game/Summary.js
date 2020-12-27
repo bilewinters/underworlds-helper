@@ -64,12 +64,14 @@ const Summary = ({ players, startTime, roundEndTimes, dispatch }) => (
       ))}
       {roundEndTimes && <View style={styles.summaryTimesContainer}>
         {roundEndTimes.map((endTime, index) => (
-          <View key={`${endTime}`} style={styles.summaryTime}>
-            <Label>Round {index + 1} - </Label><Clock accurate startTime={index === 0 ? startTime : roundEndTimes[index - 1]} endTime={endTime}/>
+          <View key={`${index}`} style={styles.summaryTime}>
+            <Label>Round {index + 1} - </Label>
+            <Clock startTime={index === 0 ? startTime : roundEndTimes[index - 1]} endTime={endTime}/>
           </View>
         ))}
         <View style={styles.summaryTime}>
-          <Label>Game - </Label><Clock accurate startTime={startTime} endTime={roundEndTimes[roundEndTimes.length - 1]}/>
+          <Label>Game - </Label>
+          <Clock startTime={startTime} endTime={roundEndTimes[roundEndTimes.length - 1]}/>
         </View>
       </View>}
       <View style={styles.summaryButtonsContainer}>
